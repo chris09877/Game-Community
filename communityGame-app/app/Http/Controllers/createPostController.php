@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class createPostController extends Controller
+class CreatePostController extends Controller
 {
+    
     public function __construct(){
         $this->middleware("auth");
     }
+
+    public function index(){
+        return view("createPost");
+    }
     
+
+
 }

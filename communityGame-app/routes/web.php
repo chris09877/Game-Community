@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CreatePostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,17 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get("/createPost", function(){
-    return view("createPost");
-});
-Route::get("/profile",function(){
-    return view("profile");
-});
+Route::get("/createPost", [App\Http\Controllers\CreatePostController::class,"index"]);
+Route::get("/profile", [App\Http\Controllers\ProfileController::class, "index"]);
 Route::get("/home", function(){
     return view('home');
 });
-Route::get('/login', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/login', [App\Http\Controllers\HomeController::class, 'index']);
 
 
-Auth::routes();
+//Route::post("/createPost", )
+
+//Auth::routes();
 
