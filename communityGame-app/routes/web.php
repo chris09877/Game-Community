@@ -26,8 +26,10 @@ Route::get("/profile", [App\Http\Controllers\ProfileController::class, "index"])
 Route::get("/home", function(){
     return view('home');
 });
-//sans ca pas de login ni register sur root page
-// Route::get('/login', [App\Http\Controllers\HomeController::class])->name("login");
+
+Route::get("/faq",[App\Http\Controllers\FaqController::class,"index"]);
+Route::get("settings", [App\Http\Controllers\SettingsController::class, "index"]);
+
 Auth::routes();
 
 
