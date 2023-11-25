@@ -412,6 +412,7 @@
             @endif
             @endif
         </div>
+       
         @endif
         @yield('content')
 

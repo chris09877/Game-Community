@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\CreatePostController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,15 +20,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get("/login", [\App\Http\Controllers\Auth\LoginController::class, "index"]);
 Route::get("/createPost", [App\Http\Controllers\CreatePostController::class,"index"]);
 Route::get("/profile", [App\Http\Controllers\ProfileController::class, "index"]);
 Route::get("/home", function(){
     return view('home');
 });
-Route::get('/login', [App\Http\Controllers\HomeController::class, 'index']);
+//sans ca pas de login ni register sur root page
+// Route::get('/login', [App\Http\Controllers\HomeController::class])->name("login");
+Auth::routes();
 
 
 //Route::post("/createPost", )
 
-//Auth::routes();
 
