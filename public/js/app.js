@@ -26867,7 +26867,7 @@ __webpack_require__.r(__webpack_exports__);
   \******************************************************/
 /***/ (() => {
 
-throw new Error("Module build failed (from ./node_modules/vue-loader/dist/index.js):\nTypeError: Cannot read properties of undefined (reading 'styles')\n    at Object.loader (C:\\Users\\chris\\Desktop\\ehb chris\\third year\\backendWeb\\communityGame-app\\communityGame-app\\node_modules\\vue-loader\\dist\\index.js:95:34)");
+throw new Error("Module build failed (from ./node_modules/vue-loader/dist/index.js):\nTypeError: Cannot read properties of undefined (reading 'styles')\n    at Object.loader (C:\\Users\\chris\\Desktop\\ehb chris\\third year\\backendWeb\\communityGame-app\\node_modules\\vue-loader\\dist\\index.js:95:34)");
 
 /***/ }),
 

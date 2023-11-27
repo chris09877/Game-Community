@@ -29,7 +29,7 @@ Route::get("/home", function(){
 
 Route::get("/faq",[App\Http\Controllers\FaqController::class,"index"]);
 Route::get("settings", [App\Http\Controllers\SettingsController::class, "index"]);
-
+Route::post("/createPost", [App\Http\Controllers\CreatePostController::class, "store"]) ->name('submitPost');
 Auth::routes();
 
 
