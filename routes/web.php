@@ -22,16 +22,14 @@ Route::get('/', function () {
 });
 Route::get("/login", [\App\Http\Controllers\Auth\LoginController::class, "index"]);
 Route::get("/createPost", [App\Http\Controllers\CreatePostController::class,"index"]);
-Route::get("/profile", [App\Http\Controllers\ProfileController::class, "index"]);
-Route::get("/home", function(){
-    return view('home');
-});
+Route::post("/createPost", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
 
-Route::get("/faq",[App\Http\Controllers\FaqController::class,"index"]);
-Route::get("settings", [App\Http\Controllers\SettingsController::class, "index"]);
-Route::post("/createPost", [App\Http\Controllers\CreatePostController::class, "store"]) ->name('submitPost');
+Route::get("/profile", [App\Http\Controllers\ProfileController::class, "index"])->name('profile');
+Route::get("/home", [App\Http\Controllers\HomeController::class, "index"])->name('home');
+
+Route::get("/faq",[App\Http\Controllers\FaqController::class,"index"])->name('faq');
+Route::get("settings", [App\Http\Controllers\SettingsController::class, "index"])->name('settings');
 Auth::routes();
-
 
 //Route::post("/createPost", )
 

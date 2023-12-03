@@ -10766,20 +10766,30 @@ var __webpack_exports__ = {};
 
 var _require = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"),
   event = _require.event;
-var routeToSubmit = "{{route('submitPost')}}";
+var formPostID = document.getElementById('post-form');
+var routeToSubmit = "{{route('submitPost')}}"; //formPostID.dataset.route;
+console.log("heelo");
 $(document).ready(function () {
+  console.log("heelo2");
   function showPostModal() {
+    console.log("heelo3");
     $("#postModal").dialog("open");
   }
   function submitPostForm() {
     // Perform form submission here or trigger form submission
     // $("post-form").submit(event => {
     //     event.preventDefault();
-    var data = $(this).serialize();
+    console.log("heelo4");
+    var data = $('#post-form').serialize();
+    console.log(data);
     $.ajax({
-      url: routeToSubmit,
+      url: "{{route('submitPost')}}",
       type: 'POST',
       data: data,
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token
+      },
+
       success: function success(response) {
         // show a succes message with a gif si y a moyens avec un timer 
         console.log('sisi reussi');
@@ -10792,8 +10802,8 @@ $(document).ready(function () {
       }
     });
     // });
+    console.log("heelo5");
   }
-
   ;
 
   // Initialize modal and hide it initially

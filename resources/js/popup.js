@@ -1,10 +1,16 @@
 'use strict';
 
 const { event } = require("jquery");
-let routeToSubmit = "{{route('submitPost')}}";
-
+let formPostID = document.getElementById('post-form');
+let routeToSubmit = "{{route('submitPost')}}";//formPostID.dataset.route;
+console.log("heelo");
 $(document).ready(function () {
+
+    console.log("heelo2");
+
     function showPostModal() {
+        console.log("heelo3");
+
         $("#postModal").dialog("open");
     }
 
@@ -12,13 +18,20 @@ $(document).ready(function () {
         // Perform form submission here or trigger form submission
         // $("post-form").submit(event => {
         //     event.preventDefault();
-            let data = $(this).serialize();
+        console.log("heelo4");
 
+            let data = $('#post-form').serialize();
+        console.log(data);
             $.ajax({
-                url: routeToSubmit,
+                url: "{{route('submitPost')}}",
                 type: 'POST',
                 data: data,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Include CSRF token
+                    
+                },
                 success: function (response) {
+                    
                     // show a succes message with a gif si y a moyens avec un timer 
                     console.log('sisi reussi');
                     $(this).dialog("close");
@@ -30,6 +43,7 @@ $(document).ready(function () {
                 }
             });
         // });
+        console.log("heelo5");
 
     };
 
