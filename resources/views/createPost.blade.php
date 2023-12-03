@@ -37,9 +37,5 @@
 @endsection
 
 @php
-  $keoke =  Cookie::make('id', Auth::id());
-//   $ui = Auth::id();
-//     echo" $ui ";
-//    $po =  session()->all();
-//    echo" $po ";
+
 @endphp
