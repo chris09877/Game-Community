@@ -25,6 +25,9 @@
         "webpack-cli": "^5.1.4"
     },
     "dependencies": {
-        "jquery": "^3.7.1"
+        "autoprefixer": "^10.4.16",
+        "jquery": "^3.7.1",
+        "postcss": "^8.4.32",
+        "tailwindcss": "^3.3.6"
     }
 }

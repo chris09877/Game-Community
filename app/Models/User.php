@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    protected $table = "user";
+    protected $table = "users";
     use HasFactory, Notifiable;
 
     /**
@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'Bio',
     ];
 
     /**
@@ -31,6 +32,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'admin',
     ];
 
     /**
@@ -40,9 +42,11 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'create_at' => 'datetime',
     ];
 
     public function posts(){
-        return $this->hasMany(Post::class, 'user', "ID");
+        return $this->hasMany(Post::class, 'user_id');
     }
 }
