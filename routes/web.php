@@ -35,10 +35,10 @@ Route::get("/profile", [App\Http\Controllers\ProfileController::class, "index"])
 Route::get("/home", [App\Http\Controllers\HomeController::class, "index"])->name('home');
 
 //ROUTE CATEGORIES
-Route::get("/categories", [App\Http\Controllers\CategoryController::class, "index"])->name('category');
-Route::post("/categories", [App\Http\Controllers\CategoryController::class, "store"])->name('category.store');
-Route::post('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
-Route::delete('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'delete'])->name('category.delete');
+// Route::get("/categories", [App\Http\Controllers\CategoryController::class, "index"])->name('category');
+// Route::post("/categories", [App\Http\Controllers\CategoryController::class, "store"])->name('category.store');
+// Route::post('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
+// Route::delete('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'delete'])->name('category.delete');
 
 
 
@@ -52,7 +52,7 @@ Route::post("/faq/create",[App\Http\Controllers\FaqController::class,"store"])->
 
 
 //SETTINGS ROUTE
-Route::get("/settings", [App\Http\Controllers\SettingsController::class, "index"])->name('settings');
+// Route::get("/settings", [App\Http\Controllers\SettingsController::class, "index"])->name('settings');
 // Route::get("/updateUser", [App\Http\Controllers\UpdateUserController::class, "index"])->name('updateUser');
 // Route::post("/updateUser", [App\Http\Controllers\UpdateUserController::class, "update"])->name('submitUser');
 
@@ -65,3 +65,13 @@ Route::post('/contact', [App\Http\Controllers\ContactController::class,"sendEmai
 
 
 
+//RESTRICTED ROUTES 
+Route::middleware(['auth', 'admin'])->group(function () {
+    // ROUTES SETTINGS
+    Route::get("/settings", [App\Http\Controllers\SettingsController::class, "index"])->name('settings');
+//ROUTE CATEGORIES
+    Route::get("/categories", [App\Http\Controllers\CategoryController::class, "index"])->name('category');
+    Route::post("/categories", [App\Http\Controllers\CategoryController::class, "store"])->name('category.store');
+    Route::post('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'delete'])->name('category.delete');
+});
