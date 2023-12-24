@@ -1,5 +1,4 @@
 @extends('layouts.layout')
-
 @section('content')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -23,7 +22,7 @@
                 <label for="category" class="block text-gray-700 text-sm font-bold mb-2">Select category:</label>
                 <select type="" id="category" name="categories" class="border rounded-md py-2 px-3">
                     @foreach($categories as $category)
-                        <option value="{{ $category }}">{{ $category }}</option>
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -35,7 +34,3 @@
     
 
 @endsection
-
-@php
-
-@endphp

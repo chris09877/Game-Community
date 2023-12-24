@@ -34,27 +34,16 @@ Route::get("/profile", [App\Http\Controllers\ProfileController::class, "index"])
 //ROUTE HOME
 Route::get("/home", [App\Http\Controllers\HomeController::class, "index"])->name('home');
 
-//ROUTE CATEGORIES
-// Route::get("/categories", [App\Http\Controllers\CategoryController::class, "index"])->name('category');
-// Route::post("/categories", [App\Http\Controllers\CategoryController::class, "store"])->name('category.store');
-// Route::post('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
-// Route::delete('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'delete'])->name('category.delete');
-
-
-
 
 // ROUTES FAQ
 Route::get("/faq",[App\Http\Controllers\FaqController::class,"index"])->name('faq');
 Route::delete('/faq/{id}', [App\Http\Controllers\FaqController::class,"destroy"])->name('faq.destroy');
-Route::put('/faq/{id}', [App\Http\Controllers\FaqController::class,"show"])->name('faq.show');
+Route::get('/faq/{id}', [App\Http\Controllers\FaqController::class,"show"])->name('faq.show');
 Route::get("/faq/create",[App\Http\Controllers\FaqController::class,"create"])->name('faq.create');
 Route::post("/faq/create",[App\Http\Controllers\FaqController::class,"store"])->name('submitFaq');
+Route::post("/faq/{id}",[App\Http\Controllers\FaqController::class,"store"])->name('faq.update');
 
 
-//SETTINGS ROUTE
-// Route::get("/settings", [App\Http\Controllers\SettingsController::class, "index"])->name('settings');
-// Route::get("/updateUser", [App\Http\Controllers\UpdateUserController::class, "index"])->name('updateUser');
-// Route::post("/updateUser", [App\Http\Controllers\UpdateUserController::class, "update"])->name('submitUser');
 
 Auth::routes();
 
