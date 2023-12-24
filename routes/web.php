@@ -35,6 +35,8 @@ Route::get("/profile", [App\Http\Controllers\ProfileController::class, "index"])
 Route::get("/home", [App\Http\Controllers\HomeController::class, "index"])->name('home');
 
 //ROUTE CATEGORIES
+Route::get("/categories", [App\Http\Controllers\CategoryController::class, "index"])->name('category');
+
 
 
 // ROUTES FAQ

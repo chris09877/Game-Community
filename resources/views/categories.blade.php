@@ -38,3 +38,4 @@
         editButton.addEventListener('click', enableEditing);
     </script>
 @endsection --}}
+<h1>{{$categories}}</h1>
