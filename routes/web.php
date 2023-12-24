@@ -61,5 +61,7 @@ Auth::routes();
 //Route::post("/createPost", )
 //ROUTE CONTACT 
 Route::get('/contact', [App\Http\Controllers\ContactController::class,"index"])->name('contact');
+Route::post('/contact', [App\Http\Controllers\ContactController::class,"sendEmail"])->name('sendEmail');
+
 
 
