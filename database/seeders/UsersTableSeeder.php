@@ -34,7 +34,16 @@ class UsersTableSeeder extends Seeder
                 'avatar' => null,
 
             ],
-            // Add more users as needed
+            [
+                'name' => 'admin',
+                'email' => 'admin@ehb.be',
+                'password' => Hash::make('Password!321'),
+                'Bio' => 'Some bio information about admin',
+                'admin' => true, 
+                'avatar' => null,
+
+            ],
+        
         ]);
     }
 }
