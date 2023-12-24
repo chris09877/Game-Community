@@ -14,8 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::pluck('categories');
-        return view("category",['categories' => $categories]);
+        $categories = Category::all();
+        return view("categories",['categories' => $categories]);
     }
 
     /**
@@ -36,7 +36,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the form data
+    $validatedData = $request->validate([
+        'categoryName' => 'required|string|max:255',
+    ]);
+
+    // Create a new category instance
+    $category = new Category();
+    $category->name = $validatedData['categoryName'];
+    // Set any other properties of the category as needed
+
+    // Save the category to the database
+    $category->save();
+
+    // Redirect to the index page or any other page as desired
+    return redirect()->route('category');
     }
 
     /**
@@ -70,7 +84,22 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+
+        // Validate the form data
+        $validatedData = $request->validate([
+            'categoryName' => 'required|string|max:255',
+        ]);
+    
+        // Update the category's name
+        $category->name = $validatedData['categoryName'];
+        // Update any other properties of the category as needed
+    
+        // Save the updated category to the database
+        $category->save();
+    
+        // Redirect to the index page or any other page as desired
+        return redirect()->route('category');
     }
 
     /**
@@ -81,6 +110,15 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+
+    if (!$category) {
+        
+        return redirect()->back()->with('error', 'Category not found');
+    }
+
+    $category->delete();
+
+    return redirect()->route('category');
     }
 }

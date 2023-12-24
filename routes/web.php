@@ -36,6 +36,10 @@ Route::get("/home", [App\Http\Controllers\HomeController::class, "index"])->name
 
 //ROUTE CATEGORIES
 Route::get("/categories", [App\Http\Controllers\CategoryController::class, "index"])->name('category');
+Route::post("/categories", [App\Http\Controllers\CategoryController::class, "store"])->name('category.store');
+Route::post('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
+Route::delete('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'delete'])->name('category.delete');
+
 
 
 
