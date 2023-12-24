@@ -407,9 +407,11 @@
             <a href="{{ route('profile') }}" class="text-sm text-gray-700 underline">Profile</a>
             <a href="{{ route('faq') }}" class="text-sm text-gray-700 underline">FAQ</a>
             {{-- here i want the code for admins --}}
-            <a href="{{ route('settings') }}" class="text-sm text-gray-700 underline">Settings</a>
-            <a href="{{ route('category') }}" class="text-sm text-gray-700 underline">Category</a>
-
+                @if(auth()->user()->admin)
+                    <!-- Show settings and categories links for admin users -->
+                    <a href="{{ route('settings') }}" class="text-sm text-gray-700 underline">Settings</a>
+                    <a href="{{ route('category') }}" class="text-sm text-gray-700 underline">Categories</a>
+                @endif
             
             @else
             <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Login</a>
@@ -418,6 +420,9 @@
 
             @if (Route::has('register'))
             <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+            <a href="{{ route('contact') }}" class="text-sm text-gray-700 underline">Contact Us</a>
+            <a href="{{ route('faq') }}" class="text-sm text-gray-700 underline">FAQ</a>
+
             @endif
             @endif
         </div>
