@@ -22,4 +22,32 @@ class ProfileController extends Controller
        // dd($userPosts);
         return view("profile",  ['user'=>$user,'userPosts'=>$userPosts]); //la retunr le view avec du user data tsb
     }
+
+    public function show($id){
+        $user = User::findOrFail($id);
+        return view('updateUser', ['user' => $user]);
+
+
+    }
+
+    public function update(Request $request)
+{
+    $user = User::find(Auth::id());
+
+    $user->name = $request->input('name');
+    $user->email = $request->input('email');
+    $user->bio = $request->input('Bio');
+
+    if ($request->hasFile('Avatar')) {
+        $file = $request->file('Avatar');
+        // Process and store the file as needed
+        // For example, you can use the `store` method to store the file in a specific directory
+        $path = $file->store('avatars');
+        $user->avatar = $path;
+    }
+
+    $user->save();
+
+    return redirect()->route('profile')->with('success', 'User information updated successfully.');
+}
 }

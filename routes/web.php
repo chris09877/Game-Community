@@ -30,6 +30,9 @@ Route::post("/createPost", [App\Http\Controllers\CreatePostController::class, "s
 
 //ROUTE PROFILE
 Route::get("/profile", [App\Http\Controllers\ProfileController::class, "index"])->name('profile');
+Route::get("/profile/update/{id}", [App\Http\Controllers\ProfileController::class, "show"])->name('profile.update');
+Route::post("/profile/update", [App\Http\Controllers\ProfileController::class, "update"])->name('submitUser');
+
 
 //ROUTE HOME
 Route::get("/home", [App\Http\Controllers\HomeController::class, "index"])->name('home');

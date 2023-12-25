@@ -11,7 +11,7 @@
         <!-- User name -->
         <h2 class="text-3xl font-bold mb-2">{{$user->Name}}</h2>
         <!-- Bio -->
-        <p class="text-gray-600">User Bio Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p class="text-gray-600">{{$user->Bio}}</p>
     </div>
 </div>
 
@@ -60,5 +60,6 @@
 
     <!-- Add more posts as needed -->
 </div>
-
-@endsection('content')
+<div>
+    <button onclick="window.location='{{route('profile.update', $user->id)}}'">update info</button></div>
+@endsection

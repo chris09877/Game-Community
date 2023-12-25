@@ -406,6 +406,8 @@
             <a href="{{ route('home') }}" class="text-sm text-gray-700 underline">Dashboard</a>
             <a href="{{ route('profile') }}" class="text-sm text-gray-700 underline">Profile</a>
             <a href="{{ route('faq') }}" class="text-sm text-gray-700 underline">FAQ</a>
+            <a href="{{ route('contact') }}" class="text-sm text-gray-700 underline">Contact Us</a>
+
             {{-- here i want the code for admins --}}
                 @if(auth()->user()->admin)
                     <!-- Show settings and categories links for admin users -->
