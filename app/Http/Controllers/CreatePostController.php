@@ -44,7 +44,7 @@ class CreatePostController extends Controller
         'Content' => $data['Content'],
         'images/videos' => $data['media'],
         'User' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
-        'Creation' => $date,
+        'created_at' => $date,
 
     ]);
     } 
@@ -55,7 +55,7 @@ class CreatePostController extends Controller
             'Content' => $data['Content'],
             'images/videos' => null,
             'User' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
-            'Creation' => $date,
+            'created_at' => $date,
 
         ]);
 

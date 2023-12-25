@@ -14,7 +14,27 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    @if($allPosts->isEmpty() )
+                        <h1>y a R</h1>
+                        
+                    @else
+                      <div>
+                         @foreach($allPosts as $post)
+                            <div>
+                                <div>
+                                    <img src="{{ $post->{'images/videos'} }}" alt="Post Image">                                </div>
+                                
+                                <div>
+                                    <h2>{{ $post->title }}</h2>
+                                    <p>{{ $post->content }}</p>
+                                    <p>{{ $post->created_at }}</p>
+                                 </div>
+                            </div>
+                          @endforeach
+                        </div>
+                    @endif
+                    
+                    </div>
                 </div>
             </div>
         </div>

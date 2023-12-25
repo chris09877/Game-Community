@@ -25,6 +25,8 @@ class Post extends Model
         'Content',
         'images/videos',
         'User',
+        'created_at',
+        'updated_at'
     ];
 
 

@@ -35,7 +35,8 @@ Route::post("/profile/update", [App\Http\Controllers\ProfileController::class, "
 
 
 //ROUTE HOME
-Route::get("/home", [App\Http\Controllers\HomeController::class, "index"])->name('home');
+Route::get("/dashboard", [App\Http\Controllers\HomeController::class, "index"])->name('home');
+
 
 
 // ROUTES FAQ
