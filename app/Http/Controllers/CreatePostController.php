@@ -42,7 +42,7 @@ class CreatePostController extends Controller
        $post =  Post::create([
         'Title' => $data['Title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
         'Content' => $data['Content'],
-        'images/videos' => $data['media'],
+        'image' => $data['media'],
         'user_id' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
         'created_at' => $date,
 
@@ -53,7 +53,7 @@ class CreatePostController extends Controller
         $post =  Post::create([
             'title' => $data['Title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
             'content' => $data['Content'],
-            'images/videos' => null,
+            'image' => null,
             'user_id' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
             'created_at' => $date,
 
@@ -81,18 +81,18 @@ class CreatePostController extends Controller
 
     }
 
-    public function update(Request $request){
+    public function update(Request $request, $id){
         $data = $request->validate([
             'content' => 'sometimes|string',
-            'media' => 'sometimes|string',
+            'media' => 'sometimes|string|nullable',
             'title' => 'sometimes|string|max:255',
             'updated_at' => 'sometimes|date',
         ]);
-    
+    // dd($id);
         // Update the post with the new data
-        $post = Post::findOrFail($request->postId);
+        $post = Post::findOrFail($id);
         $post->update([
-            'images/videos' => $data['media'],
+            'image' => $data['media'],
             'title' => $data['title'],
             'updated_at' => $data['updated_at'],
             'content' => $data['content'],

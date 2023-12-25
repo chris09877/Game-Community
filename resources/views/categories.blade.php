@@ -92,11 +92,16 @@
             data: { name: newName },
             success: function(response) {
                 if (response.success) {
+
                     $td.find('.category-name').text(newName).show();
                     $td.find('.editCategoryInput').hide();
                     $td.find('.saveBtn, .cancelBtn').hide();
                 }
-            }
+            },
+            error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.log(xhr.responseText);
+                }
         });
     });
 
@@ -128,7 +133,7 @@ $(document).ready(function () {
                 // You can update the UI to display the newly added category without reloading the page
             },
             error: function (xhr, status, error) {
-                console.log('Error adding category');
+                console.log(xhr.responseText);
             }
         });
     };
