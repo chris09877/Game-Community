@@ -2,11 +2,11 @@
 @section('content')
 
 <h1>FAQ</h1>
-@if($user->admin)
 <button onclick="window.location = '{{route('faq.create')}}'"
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
     Create Question
 </button>
+@if($user->admin)
 <button onclick="window.location = '{{route('category')}}'"
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
     Categories
