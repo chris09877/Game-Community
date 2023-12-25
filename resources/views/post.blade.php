@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<button id="updateButton">Update</button>
+@if($user->id == $post->user_id)
+    <button id="updateButton">Update</button>
+@endif
 
 <div>
     <h1>{{ $post->title }}</h1>
@@ -12,8 +14,11 @@
     <p id="old-content">Content: {{ $post->content }}</p>
     <input type="text" id="new-content" style="display:none;" placeholder=" {{$post->content}}">
     <p>Creation Date: {{ $post->created_at }}</p>
-    <button id="saveButton">Save</button>
-    <button onclick="window.location='{{route('home')}}'">Cancel</button>
+    @if($user->id == $post->user_id)
+        <button id="saveButton">Save</button>
+        <button onclick="window.location='{{route('home')}}'">Cancel</button>
+    @endif
+    
 
 </div>
 
