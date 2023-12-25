@@ -16,6 +16,8 @@ class FaqTableSeeder extends Seeder
      */
     public function run()
     {
+       
+        
         $bugCategoryId = Category::where('name', 'Bug')->value('id');
         $updateCategoryId = Category::where('name', 'Update')->value('id');
         DB::table('faq')->insert([

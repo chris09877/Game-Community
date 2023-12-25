@@ -17,12 +17,14 @@ class CreateCommentTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('parent_id')->nullable(true);
-            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('post_id')->nullable(true);
+            $table->unsignedBigInteger('faq_id')->nullable(true);
             $table->text('text');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->nullable(false);
-            $table->foreign('post_id')->references('id')->on('post')->nullable(false);
+            $table->foreign('post_id')->references('id')->on('post')->nullable(true);
+            $table->foreign('faq_id')->references('id')->on('faq')->nullable(true);
             $table->foreign('parent_id')->references('id')->on('comment')->nullable(true);
         });
     }

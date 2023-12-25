@@ -14,20 +14,28 @@ class CommentTableSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('comment')->insert([
-        //     [
-        //         'user_id' => 1,
-        //         'parent_id' => 0,
-        //         'text' => 'Comment text for the first post.',
-        //         'post_id' => 1,
-        //     ],
-        //     [
-        //         'user_id' => 2,
-        //         'parent_id' => 1,
-        //         'text' => 'Reply to the first comment.',
-        //         'post_id' => 1,
-        //     ],
-        //     // Add more comments as needed
-        // ]);
+        DB::table('comment')->insert([
+            [
+                'user_id' => 1,
+                'parent_id' => null,
+                'text' => 'Comment text for the first post.',
+                'post_id' => 1,
+                'faq_id' => null,
+            ],
+            [
+                'user_id' => 2,
+                'parent_id' => 1,
+                'text' => 'Reply to the first comment.',
+                'post_id' => 1,
+                'faq_id' => null,
+            ],
+            [
+                'user_id' => 2,
+                'parent_id' => null,
+                'text' => 'Reply to the first comment.',
+                'post_id' => null,
+                'faq_id' => 1,
+            ],
+                ]);
     }
 }

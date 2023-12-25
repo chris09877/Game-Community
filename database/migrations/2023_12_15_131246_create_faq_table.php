@@ -23,7 +23,6 @@ class CreateFaqTable extends Migration
 
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->nullable(false);
-            // $table->foreign('category_id')->references('id')->on('categories');
                 $table->foreign('category_id')->references('id')->on('categories');
         });
     }
