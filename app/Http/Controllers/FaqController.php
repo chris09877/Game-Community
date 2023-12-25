@@ -7,6 +7,7 @@ use App\Models\Faq;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
+use App\Models\Comment;
 
 class FaqController extends Controller
 {
@@ -25,9 +26,9 @@ class FaqController extends Controller
         $user = Auth::user();
         $allFaqs = Faq::all();
         $categories = Category::all();
+        $comments = Comment::whereNotNull('faq_id')->get();
 
-
-        return view('faq', compact('user', 'allFaqs', 'categories'));
+        return view('faq', compact('user', 'allFaqs', 'categories', 'comments'));
     }
 
     /**

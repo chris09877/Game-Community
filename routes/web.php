@@ -53,7 +53,7 @@ Route::post("/faq/{id}",[App\Http\Controllers\FaqController::class,"store"])->na
 
 //ROUTES COMMENTS
 Route::delete('/comments/{id}', [App\Http\Controllers\CommentController::class, 'destroy'])->name('comment.destroy');
-Route::post('/comments/create', [App\Http\Controllers\CommentController::class, 'store'])->name('comment.stopre');
+Route::post('/comments/create', [App\Http\Controllers\CommentController::class, 'store'])->name('comment.store');
 
 
 Auth::routes();

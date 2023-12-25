@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class CommentController extends Controller
 {
@@ -35,7 +37,22 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'reply' => 'required',
+            'faq_id' => 'required|exists:faq,id',
+        ]);
+    
+        // Create a new comment instance
+        $comment = new Comment();
+        $comment->text = $validatedData['reply'];
+        $comment->faq_id = $validatedData['faq_id'];
+        $comment->post_id = null;
+        $comment->parent_id = null;
+        $comment->created_at = now();
+        $comment->user_id = Auth::id();
+        $comment->save();
+        return redirect()->back();
+
     }
 
     /**
