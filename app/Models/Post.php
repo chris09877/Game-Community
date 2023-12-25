@@ -10,7 +10,7 @@ class Post extends Model
 {
     public $timestamps = false;
     protected $table = "post";
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'id';
     public $incrementing = true; // Indicates if the IDs are auto-incrementing
     use HasFactory;
 
@@ -21,10 +21,10 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'Title',
-        'Content',
+        'title',
+        'content',
         'images/videos',
-        'User',
+        'user_id',
         'created_at',
         'updated_at'
     ];

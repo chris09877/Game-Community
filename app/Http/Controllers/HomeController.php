@@ -30,7 +30,7 @@ class HomeController extends Controller
         $userPosts = Post::where('user_id', $user->id)->get();
         $userPosts = Post::orderBy('created_at', 'desc')->get();
         $allPosts = Post::all();
-        // $allPosts = Post::orderBy('created_at', 'desc')->get();
+        $allPosts = Post::orderBy('created_at', 'desc')->get();
         return view('home', ['userPosts' => $userPosts, 'allPosts' => $allPosts]);
     }
 }

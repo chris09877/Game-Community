@@ -25,8 +25,11 @@ Route::get('/', function () {
 Route::get("/login", [\App\Http\Controllers\Auth\LoginController::class, "index"]);
 
 //ROUTE TO CREATE POST
-Route::get("/createPost", [App\Http\Controllers\CreatePostController::class,"index"]);
-Route::post("/createPost", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
+Route::get("/post/create", [App\Http\Controllers\CreatePostController::class,"index"]);
+Route::post("/post/create", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
+Route::get("/post/{id}", [App\Http\Controllers\CreatePostController::class,"show"])->name('post.show');
+Route::post("/post/{id}", [App\Http\Controllers\CreatePostController::class,"update"])->name('post.update');
+
 
 //ROUTE PROFILE
 Route::get("/profile", [App\Http\Controllers\ProfileController::class, "index"])->name('profile');
@@ -47,6 +50,10 @@ Route::get("/faq/create",[App\Http\Controllers\FaqController::class,"create"])->
 Route::post("/faq/create",[App\Http\Controllers\FaqController::class,"store"])->name('submitFaq');
 Route::post("/faq/{id}",[App\Http\Controllers\FaqController::class,"store"])->name('faq.update');
 
+
+//ROUTES COMMENTS
+Route::delete('/comments/{id}', [App\Http\Controllers\CommentController::class, 'destroy'])->name('comment.destroy');
+Route::post('/comments/create', [App\Http\Controllers\CommentController::class, 'store'])->name('comment.stopre');
 
 
 Auth::routes();

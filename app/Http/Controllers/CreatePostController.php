@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -30,7 +30,7 @@ class CreatePostController extends Controller
         //$data['user_id'] = Auth::id();
         //dd( auth()->check(),auth()->id(), auth()->user());
        $user = auth()->user();
-        $userId = $user->ID;
+        $userId = $user->id;
         //Cookie::get('id');
         //dd( $userId, $user);
         // $userId=$request->cookie('id');
@@ -43,7 +43,7 @@ class CreatePostController extends Controller
         'Title' => $data['Title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
         'Content' => $data['Content'],
         'images/videos' => $data['media'],
-        'User' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
+        'user_id' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
         'created_at' => $date,
 
     ]);
@@ -51,10 +51,10 @@ class CreatePostController extends Controller
     else {
         //$mediaPath = null; // Set default value if no file is uploaded
         $post =  Post::create([
-            'Title' => $data['Title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
-            'Content' => $data['Content'],
+            'title' => $data['Title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
+            'content' => $data['Content'],
             'images/videos' => null,
-            'User' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
+            'user_id' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
             'created_at' => $date,
 
         ]);
@@ -73,5 +73,32 @@ class CreatePostController extends Controller
         return response()->json(['message' => 'Post created successfully']);
     }
 
+    public function show($id){
+        $post = Post::findOrFail($id);
+        $user = Auth::user();
+        $comments = Comment::where('post_id', $post->id)->get();
+        return view('post', ['post' => $post, 'user' => $user, 'comments' => $comments]);
 
+    }
+
+    public function update(Request $request){
+        $data = $request->validate([
+            'content' => 'sometimes|string',
+            'media' => 'sometimes|string',
+            'title' => 'sometimes|string|max:255',
+            'updated_at' => 'sometimes|date',
+        ]);
+    
+        // Update the post with the new data
+        $post = Post::findOrFail($request->postId);
+        $post->update([
+            'images/videos' => $data['media'],
+            'title' => $data['title'],
+            'updated_at' => $data['updated_at'],
+            'content' => $data['content'],
+
+        ]);
+    
+        return response()->json(['message' => 'Post updated successfully']); 
+    }
 }
