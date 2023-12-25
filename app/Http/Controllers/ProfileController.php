@@ -45,7 +45,18 @@ class ProfileController extends Controller
         $path = $file->store('avatars');
         $user->avatar = $path;
     }
+    if ($request->has('status')) {
+        $status = $request->input('status');
 
+        if ($status == 'true') 
+        {
+            $user->admin = true;
+        } 
+        elseif ($status == 'false')
+        {
+            $user->admin = false;
+        }
+    }
     $user->save();
 
     return redirect()->route('profile')->with('success', 'User information updated successfully.');

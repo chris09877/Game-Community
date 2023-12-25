@@ -1,11 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-<H1>Update your information</H1>
-
-
-<button id="postButton">Update information</button>
-
+<h1>Update your information</h1>
 
 <div id="update-user" title="update-user">
 
@@ -23,17 +19,16 @@
 
         <label for="Avatar">Upload Image/Video:</label><br>
         <input type="file" id="Avatar" name="Avatar"><br><br>
+        @if(Auth::user()->admin)
+        <label for="status">Admin</label>
+        <select name="status" id="status">
+            <option value="true">Is admin</option>
+            <option value="false">Is regular user</option>
+        </select>
+        @endif
         <input type="number" name="user" id="user_id" style="display: none;" value="{{Auth::id()}}">
 
         <input type="submit" value="Update">
     </form>
 </div>
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="{{mix('/js/popupUser.js')}}"></script> --}}
 @endsection
-
-@php
-
-@endphp
