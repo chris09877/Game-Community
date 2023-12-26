@@ -1,31 +1,41 @@
 @extends('layouts.app')
 @section('content')
-<h1>Categories</h1>
-<table id="categoryTable">
-    <thead>
-        <tr>
-            <th>Category Name</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($categories as $category)
-        <tr id="row_{{ $category->id }}">
-            <td>
-                <span class="category-name">{{ $category->name }}</span>
-                <input type="text" class="editCategoryInput" style="display:none;">
-                <button class="saveBtn" style="display:none;">Save</button>
-                <button class="cancelBtn" style="display:none;">Cancel</button>
-            </td>
-            <td>
-                <button class="deleteBtn" data-id="{{ $category->id }}">Delete</button>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-
-<button onclick="window.location='{{ route('faq') }}'">Cancel</button>
+<h1 class="text-3xl font-bold text-center mb-4 ml-5">Categories</h1>
+<div class="container mx-auto py-8 relative">
+    <table id="categoryTable" class="max-w-md mx-auto  p-6 rounded-md shadow-md">
+        <thead class="mb-8">
+            <tr >
+                <th >Categories Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($categories as $category)
+            <tr id="row_{{ $category->id }}">
+                <td>
+                    <span class="category-name">{{ $category->name }}</span>
+                    <input type="text" class="editCategoryInput" style="display:none;">
+                    <button
+                        class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
+                        id="saveBtn" style="display:none;">Save</button>
+                    <button
+                        class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
+                        id="cancelBtn" style="display:none;">Cancel</button>
+                </td>
+                <td class="action">
+                    <button
+                        class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
+                        data-id="{{ $category->id }}">Delete</button>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border mt-2 mr-8"
+    onclick="window.location='{{ route('faq') }}'">Cancel</button>
+</div>
+{{-- <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
+    onclick="window.location='{{ route('faq') }}'">Cancel</button> --}}
 <!-- Add Category Modal -->
 <div id="addCategoryModal" title="Add Category" class="mt-6">
     <form id="category-form" method="POST">
@@ -38,8 +48,8 @@
 
         </div>
 
-        <button type="button" id="addCategoryButton"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
+            id="addCategoryButton" class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded">
             Add Category
         </button>
     </form>
@@ -50,8 +60,10 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script>
     'use strict';
-    $('.deleteBtn').click(function() {
+    $(document).ready(function () {
+    $('.action button:first').click(function() {
         let id = $(this).data('id');
+        console.log(`${id}`);
         $.ajax({
             url: "{{ route('category.delete',['id' => " + id + "]) }}",
             type: 'DELETE',
@@ -72,7 +84,7 @@
     });
 
     // Cancel Edit
-    $('.cancelBtn').click(function() {
+    $('#cancelBtn').click(function() {
         let $td = $(this).closest('td');
         $td.find('.category-name').show();
         $td.find('.editCategoryInput').hide();
@@ -80,7 +92,7 @@
     });
 
     // Update Category Name
-    $('.saveBtn').click(function() {
+    $('#saveBtn').click(function() {
         let $td = $(this).closest('td');
         let id = $td.closest('tr').attr('id').replace('row_', '');
         let newName = $td.find('.editCategoryInput').val();
@@ -107,7 +119,7 @@
 
    
 
-$(document).ready(function () {
+
    
         $("#addCategoryModal").on("click", function () {
     // Show the category name label and input field

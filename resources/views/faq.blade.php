@@ -1,98 +1,74 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 @section('content')
 
-<h1>FAQ</h1>
+
+<h1 class="text-3xl font-bold mb-6 text-center">Themes</h1>
+
 <button onclick="window.location = '{{route('faq.create')}}'"
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Create Question
-</button>
+style="float: right;"  class=" bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border mr-4" >Create Question</button>
 @if($user->admin)
 <button onclick="window.location = '{{route('category')}}'"
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Categories
-</button>
+    class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Categories</button>
 @endif
-<h2>Themes</h2>
+
 @foreach($categories as $category)
-<h3>{{$category->name}}</h3>
-@foreach($allFaqs as $faq)
-@if($faq->category_id === $category->id)
-@if($user->admin)
-{{-- meetre href to page where u can update the faq --}}
-<div>
-    <a href="{{ route('faq.show', ['id' => $faq->id]) }}">
-        <div>
-            <form action="{{ route('faq.destroy', ['id' => $faq->id]) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete FAQ</button>
-            </form>
-            <p>{{$faq->title}}</p>
-            <p>{{$faq->text}}</p>
+    <h3 class="text-black font-bold py-2 px-4 mr-4">{{$category->name}}</h3>
 
-        </div>
-    </a>
-    @auth
-    <button onclick="toggleReplyInput(this)">Reply</button>
-    <div id="replyInput" style="display: none;">
-        <input type="text" id="replyText">
-        <button id="{{$faq->id}}" onclick="sendReply(this)">Send</button>
-    </div>
-    @endauth
-</div>
-<div>
-    <h2>Answers</h2>
-    @if($comments->where('faq_id', $faq->id)->isEmpty())
-    <p>There are no answers yet to this question.</p>
-    @else
-    @foreach($comments as $comment)
-    <div>
-        <p>{{$comment->user_id}}</p>
-        <p>{{$comment->text}}</p>
-        <p>{{$comment->created_at}}</p>
+    @foreach($allFaqs as $faq)
+        @if($faq->category_id === $category->id)
+            <div class="border p-4 mb-4">
+                @if($user->admin)
+                        <div class="flex items-center">
+                            <div>
+                                <form action="{{ route('faq.destroy', ['id' => $faq->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button style="float: right;" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border" type="submit">Delete FAQ</button>
+                                </form>
+                            </div>
+                @endif
+                <a href="{{ route('faq.show', ['id' => $faq->id]) }}">
+                    <p class="font-bold">{{$faq->title}}</p>
+                    <p>{{$faq->text}}</p>
+                </a>
 
-    </div>
+                @auth
+                    
+                    <div class="flex items-center">
+                        <button onclick="toggleReplyInput(this)"
+                                class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Reply
+                        </button>
+                       
+                        <div id="replyInput" class="hidden ml-4" style="display: none;">
+                            <input type="text" id="replyText" class="border rounded px-2 py-1">
+                            <button onclick="sendReply(this)"
+                                    id="{{$faq->id}}"
+                                    class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Send
+                            </button>
+                        </div>
+                    </div>
+                    
+                @endauth
+
+                <div class="border-t mt-4 pt-4">
+                    <h2 class="text-black font-bold py-2 px-4">Answers</h2>
+                    @if($comments->where('faq_id', $faq->id)->isEmpty())
+                        <p>There are no answers yet to this question.</p>
+                    @else
+                        @foreach($comments as $comment)
+                            @if($comment->faq_id === $faq->id)
+                                <div class="border rounded p-2 mb-2">
+                                    <p>{{$comment->user->name}}</p>
+                                    <p>{{$comment->text}}</p>
+                                    <p>{{$comment->created_at}}</p>
+                                </div>
+                            @endif
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        @endif
     @endforeach
-    @endif
-</div>
-@else
-<div>
-    <a href="{{ route('faq.show', ['id' => $faq->id]) }}">
-        <div>
-            <p>{{$faq->title}}</p>
-            <p>{{$faq->text}}</p>
-
-        </div>
-
-    </a>
-    @auth
-    <button onclick="toggleReplyInput(this)">Reply</button>
-    <div id="replyInput" style="display: none;">
-        <input type="text" id="replyText">
-        <button id="{{$faq->id}}" onclick="sendReply(this)">Send</button>
-    </div>
-    @endauth
-</div>
-<div>
-    <h2>Answers</h2>
-    @if($comments->where('faq_id', $faq->id)->isEmpty())
-    <p>There are no answers yet to this question.</p>
-    @else
-    @foreach($comments as $comment)
-    <div>
-        <p>{{$comment->user_id}}</p>
-        <p>{{$comment->text}}</p>
-        <p>{{$comment->created_at}}</p>
-
-    </div>
-    @endforeach
-    @endif
-</div>
-@endif
-@else
-<p>There are no questions related to the theme {{$category->name}}.</p>
-@endif
-@endforeach
 @endforeach
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

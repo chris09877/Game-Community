@@ -40,9 +40,11 @@ class FaqController extends Controller
     {
 
         $categories = Category::all();
-
-        return view('createFaq', ['categories' => $categories]);
+// dd($categories);
+        return view('createFaq2', ['categories' => $categories]);
     }
+
+   
 
     /**
      * Store a newly created resource in storage.

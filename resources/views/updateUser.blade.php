@@ -1,34 +1,55 @@
-@extends('layouts.layout')
-
+@extends('layouts.app')
 @section('content')
-<h1>Update your information</h1>
+<div class="flex justify-center items-center h-screen">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold mb-4">Update your information</h1>
 
-<div id="update-user" title="update-user">
+        <div id="update-user" title="update-user" class="rounded-lg shadow-md p-8 inline-block mt-8">
+            <form action="{{ route('submitUser') }}" method="POST" enctype="multipart/form-data" id="post-form"
+                data-route="{{ route('submitUser') }}" class="flex flex-col gap-6">
+                @csrf
 
-    <form action="{{ route('submitUser') }}" method="POST" enctype="multipart/form-data" id="post-form"
-        data-route="{{ route('submitUser') }}">
-        @csrf
-        <label for="Name">Name:</label><br>
-        <input type="text" id="name" name="name" value="{{$user->name}}"><br><br>
+                <div class="flex flex-col mb-4">
+                    <label for="Name" class="text-lg mb-2">Name:</label>
+                    <input type="text" id="name" name="name" value="{{$user->name}}"
+                        class="border rounded-md py-2 px-3">
+                </div>
 
-        <label for="email">E-mail:</label><br>
-        <input type="text" id="email" name="email" value="{{$user->email}}"><br><br>
+                <div class="flex flex-col mb-4">
+                    <label for="email" class="text-lg mb-2">E-mail:</label>
+                    <input type="text" id="email" name="email" value="{{$user->email}}"
+                        class="border rounded-md py-2 px-3">
+                </div>
 
-        <label for="Bio">Bio:</label><br>
-        <textarea id="Bio" name="Bio" rows="4" cols="50" value="{{$user->Bio}}"></textarea><br><br>
+                <div class="flex flex-col mb-4">
+                    <label for="Bio" class="text-lg mb-2">Bio:</label>
+                    <textarea id="Bio" name="Bio" rows="4" cols="50"
+                        class="border rounded-md py-2 px-3">{{$user->Bio}}</textarea>
+                </div>
 
-        <label for="Avatar">Upload Image/Video:</label><br>
-        <input type="file" id="Avatar" name="Avatar"><br><br>
-        @if(Auth::user()->admin)
-        <label for="status">Admin</label>
-        <select name="status" id="status">
-            <option value="true">Is admin</option>
-            <option value="false">Is regular user</option>
-        </select>
-        @endif
-        <input type="number" name="user" id="user_id" style="display: none;" value="{{Auth::id()}}">
+                <div class="flex flex-col mb-4">
+                    <label for="Avatar" class="text-lg mb-2">Upload Image/Video:</label>
+                    <input type="file" id="Avatar" name="Avatar" class="border rounded-md py-2 px-3">
+                </div>
 
-        <input type="submit" value="Update">
-    </form>
+                @if(Auth::user()->admin)
+                <div class="flex flex-col mb-4">
+                    <label for="status" class="text-lg mb-2">Admin</label>
+                    <select name="status" id="status" class="border rounded-md py-2 px-3">
+                        <option value="true">Is admin</option>
+                        <option value="false">Is regular user</option>
+                    </select>
+                </div>
+                @endif
+
+                <input type="number" name="user" id="user_id" style="display: none;" value="{{Auth::id()}}">
+
+                <input type="submit" value="Update"
+                    class="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded border">
+            </form>
+        </div>
+    </div>
 </div>
 @endsection
+
+

@@ -1,59 +1,55 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 
 @section('content')
 
+<div class="container mx-auto py-8">
+    <div class="mb-4">
+        <h2 class="text-3xl font-bold">Regular Users</h2>
+        <table id="userTable" class="w-full border-collapse">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="py-2 px-4">User Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($users as $user)
+                <tr class="border-t">
+                    <td class="py-2 px-4">
+                        <a href="{{ route('profile.update', $user->id) }}" class="text-blue-500 hover:underline">{{ $user->name }}</a>
+                    </td>
+                    {{-- <td>
+                        <button class="deleteBtn" data-id="{{ $category->id }}">Delete</button>
+                    </td> --}}
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
-<h1>settings</h1>
-<h2>Regular Users</h2>
-<table id="userTable">
-    <thead>
-        <tr>
-            <th>User Name</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($users as $user)
+    <div>
+        <h2 class="text-3xl font-bold">Admins</h2>
+        <table id="adminTable" class="w-full border-collapse">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="py-2 px-4">User Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($admins as $admin)
+                <tr class="border-t">
+                    <td class="py-2 px-4">
+                        <a href="{{ route('profile.update', $admin->id) }}" class="text-blue-500 hover:underline">{{ $admin->name }}</a>
+                    </td>
+                    {{-- <td>
+                        <button class="deleteBtn" data-id="{{ $category->id }}">Delete</button>
+                    </td> --}}
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
 
-            <tr id="row_{{ $user->id }}">
-                <td>
-                    <a href="{{route('profile.update', $user->id)}}">
-
-                    <span class="category-name">{{ $user->name }}</span>
-                </a>
-                </td>
-                {{-- <td>
-                    <button class="deleteBtn" data-id="{{ $category->id }}">Delete</button>
-                </td> --}}
-            </tr>
-       
-        @endforeach
-    </tbody>
-</table>
-
-<h2>Admins</h2>
-<table id="adminTable">
-    <thead>
-        <tr>
-            <th>User Name</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($admins as $admin)
-            <tr id="row_{{ $admin->id }}">
-                <td>
-                    <a href="{{route('profile.update', $admin->id)}}">
-
-                    <span class="category-name">{{ $admin->name }}</span>
-                </a>
-
-                </td>
-                {{-- <td>
-                    <button class="deleteBtn" data-id="{{ $category->id }}">Delete</button>
-                </td> --}}
-            </tr>
-        @endforeach
-    </tbody>
-</table>
 @endsection

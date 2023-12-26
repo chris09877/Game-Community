@@ -1,0 +1,57 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Flex container for overall layout */
+/* .w-3/4 {
+    width: 75%; 
+    margin: 0 auto; 
+} */
+
+/* Flex container for each section */
+.flex {
+    display: flex;
+    gap: 8px; /* Adjust gap between flex items */
+}
+
+/* Flex container for user profile section */
+/* .w-1/4 {
+    display: flex;
+} */
+
+/* Style for user profile photo and bio */
+.profile-photo {
+    margin-right: 8px; /* Adjust margin between photo and text */
+}
+
+/* Flex container for statistics section */
+.statistics-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px; /* Adjust spacing between statistics items */
+}
+
+/* Flex container for user posts section */
+.user-posts {
+    display: flex;
+    flex-wrap: wrap; /* Wrap posts if they exceed the container width */
+}
+
+/* Style for individual post */
+.post {
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin-bottom: 16px;
+    width: calc(50% - 16px); /* Adjust width of posts */
+}
+
+/* Clearfix for post container */
+.post::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+h1, h2, h3 {
+    font-size: xx-large;
+}

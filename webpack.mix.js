@@ -15,7 +15,10 @@ mix.js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
     .js('resources/js/popup.js', 'public/js')
-    .postCss('resources/css/style.css', 'public/css/app.css')
+    .postCss('resources/css/style.css', 'public/css/app.css',[
+        require('tailwindcss')
+
+    ])
 
     .version();
 //jfjfjfjfjfjf

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
 
-    <h1 class="text-4xl mb-4">Create question</h1>
+    <h1 class="text-4xl mb-8 text-center ">Create question</h1>
     
-    <div id="postModal" title="Create Post" class="mt-6">
+    <div id="postModal" title="Create Post" class="container mx-auto py-8 mt-5">
         <form action="{{ route('submitFaq') }}" method="POST" enctype="multipart/form-data" id="post-form"
             data-route="{{ route('submitFaq') }}">
             @csrf
@@ -26,7 +26,7 @@
                 </select>
             </div>
     
-            <input type="submit" value="Submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            <input type="submit" value="Submit" class=" font-bold py-2 px-4 rounded border">
         </form>
     </div>
     

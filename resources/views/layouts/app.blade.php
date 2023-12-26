@@ -7,17 +7,23 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+       
+
+
+
+    </style>
 </head>
 <body>
     <div id="app">
@@ -32,8 +38,32 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav ms-auto">
+                        @auth
+                            
+                                <li class="nav-item">
+                                    <a href="{{ route('home') }}" class="nav-link">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('profile') }}" class="nav-link">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('faq') }}" class="nav-link">FAQ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
+                                </li>
+                                    @if(auth()->user()->admin)
+                                        <li class="nav-item">
+                                            <a href="{{ route('settings') }}" class="nav-link">Settings</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('category') }}" class="nav-link">Categories</a>
+                                        </li>
+                                    @endif
 
+
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -44,12 +74,25 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('faq') }}" class="nav-link">{{ __('FAQ') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('contact') }}" class="nav-link">{{ __('Contact Us') }}</a>
+                                </li>
                             @endif
-
+                            
                             @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a href="{{ route('faq') }}" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
+                            </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
+
                             @endif
                         @else
                             <li class="nav-item dropdown">
@@ -58,6 +101,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -70,6 +115,34 @@
                                 </div>
                             </li>
                         @endguest
+                        {{-- @auth
+                            
+                            <ul class="navbar-nav ">
+                                <li class="nav-item">
+                                    <a href="{{ route('home') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('profile') }}" class="text-sm text-gray-700 underline">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('faq') }}" class="text-sm text-gray-700 underline">FAQ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('contact') }}" class="text-sm text-gray-700 underline">Contact Us</a>
+                                </li>
+                                    @if(auth()->user()->admin)
+                                        <!-- Show settings and categories links for admin users -->
+                                        <li class="nav-item">
+                                            <a href="{{ route('settings') }}" class="text-sm text-gray-700 underline">Settings</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('category') }}" class="text-sm text-gray-700 underline">Categories</a>
+                                        </li>
+                                    @endif
+                            </ul>
+
+
+                        @endauth --}}
                     </ul>
                 </div>
             </div>

@@ -25,7 +25,7 @@ Route::get('/', function () {
 Route::get("/login", [\App\Http\Controllers\Auth\LoginController::class, "index"]);
 
 //ROUTE TO CREATE POST
-Route::get("/post/create", [App\Http\Controllers\CreatePostController::class,"index"]);
+Route::get("/post/create", [App\Http\Controllers\CreatePostController::class,"index"])->name('post.create');
 Route::post("/post/create", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
 Route::get("/post/{id}", [App\Http\Controllers\CreatePostController::class,"show"])->name('post.show');
 Route::post("/post/{id}", [App\Http\Controllers\CreatePostController::class,"update"])->name('post.update');
@@ -46,7 +46,7 @@ Route::get("/dashboard", [App\Http\Controllers\HomeController::class, "index"])-
 Route::get("/faq",[App\Http\Controllers\FaqController::class,"index"])->name('faq');
 Route::delete('/faq/{id}', [App\Http\Controllers\FaqController::class,"destroy"])->name('faq.destroy');
 Route::get('/faq/{id}', [App\Http\Controllers\FaqController::class,"show"])->name('faq.show');
-Route::get("/faq/create",[App\Http\Controllers\FaqController::class,"create"])->name('faq.create');
+Route::get('/create/faq', 'App\Http\Controllers\FaqController@create')->name('faq.create');
 Route::post("/faq/create",[App\Http\Controllers\FaqController::class,"store"])->name('submitFaq');
 Route::post("/faq/{id}",[App\Http\Controllers\FaqController::class,"store"])->name('faq.update');
 
@@ -75,3 +75,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
     Route::delete('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'delete'])->name('category.delete');
 });
+
+
+
+
+
