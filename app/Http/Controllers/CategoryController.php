@@ -117,6 +117,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        dd("jdkjdfkd");
         $category = Category::find($id);
 
     if (!$category) {

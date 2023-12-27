@@ -34,6 +34,10 @@
     </table>
     <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border mt-2 mr-8"
     onclick="window.location='{{ route('faq') }}'">Cancel</button>
+    <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
+    id="addCategoryButton">
+    Add Category
+</button>
 </div>
 {{-- <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
     onclick="window.location='{{ route('faq') }}'">Cancel</button> --}}
@@ -49,18 +53,19 @@
 
         </div>
 
-        <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
-            id="addCategoryButton" class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded">
-            Add Category
-        </button>
+       
     </form>
 </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+
 <script>
     'use strict';
+    //delete
     $(document).ready(function () {
     $('.action button:first').click(function() {
         let id = $(this).data('id');
@@ -74,6 +79,8 @@
                 }
             }
         });
+        console.log(`${id}`);
+
     });
 
     // Edit Category Name
