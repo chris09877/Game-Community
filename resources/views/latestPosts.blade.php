@@ -3,7 +3,24 @@
 @section('title', 'Latest Posts')
 @section('content')
 <div class="w-3/4 mx-auto">
-    
+    <nav class="py-4">
+        <div class="flex items-center justify-between">
+            <div class="sm:hidden">
+                <button class="text-white hover:text-gray-300 focus:outline-none">
+                    <!-- Your responsive menu icon here -->
+                </button>
+            </div>
+
+            <div class="hidden sm:flex space-x-4 text-white">
+                <a href="{{ route('faq') }}" class="text-lg hover:text-gray-300">FAQ</a>
+                <a href="{{ route('contact') }}" class="text-lg hover:text-gray-300">Contact Us</a>
+                <a href="{{ route('latestPosts') }}" class="text-lg hover:text-gray-300">Latest Posts</a>
+                <a href="{{ route('about') }}" class="text-lg hover:text-gray-300">About</a>
+                <a href="{{ route('login') }}" class="text-lg hover:text-gray-300">Login</a>
+                <a href="{{ route('register') }}" class="text-lg hover:text-gray-300">Register</a>
+            </div>
+        </div>
+    </nav>
     
     <h1 class="subtitle mb-4 text-xl font-bold leading-none tracking-tight text-gray-700 md:text-2xl lg:text-3xl">Top Posts Of The Mounth</h1>
 

@@ -62,11 +62,13 @@
                                 <a href="{{ route('login') }}" class="nav-link">Login</a>
                                 <a href="{{ route('faq') }}" class="nav-link">FAQ</a>
                                 <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
-                            @elseif(Route::currentRouteName() == 'faq' || Route::currentRouteName() == 'contact')
+                            @elseif(Route::currentRouteName() == 'faq' || Route::currentRouteName() == 'contact' || Route::currentRouteName() == 'about' || Route::currentRouteName() == 'latestPosts')
                                 <a href="{{ route('login') }}" class="nav-link">Login</a>
                                 <a href="{{ route('register') }}" class="nav-link">Register</a>
                                 <a href="{{ route('faq') }}" class="nav-link">FAQ</a>
                                 <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
+                                <a href="{{ route('latestPosts') }}" class="nav-link">Latest Posts</a>
+                                <a href="{{ route('about') }}" class="nav-link">About</a>
                             @endif
                            
                         @endguest

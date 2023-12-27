@@ -30,6 +30,9 @@ use App\Http\Controllers\ProfileController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 Route::get("/login", [\App\Http\Controllers\Auth\LoginController::class, "index"]);
 
 //LATEST POST
