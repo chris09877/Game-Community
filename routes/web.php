@@ -5,7 +5,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LatestNewsController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\UpdateUser;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
 
 
 /*
@@ -23,6 +31,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get("/login", [\App\Http\Controllers\Auth\LoginController::class, "index"]);
+
+//LATEST POST
+Route::get('/latest-posts', [LatestNewsController::class, 'index'])->name('latestPosts');
 
 //ROUTE TO CREATE POST
 Route::get("/post/create", [App\Http\Controllers\CreatePostController::class,"index"])->name('post.create');

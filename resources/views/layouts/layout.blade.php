@@ -27,6 +27,7 @@
                 <div class="hidden sm:flex space-x-4 text-white">
                     <a href="{{ route('faq') }}" class="text-lg hover:text-gray-300">FAQ</a>
                     <a href="{{ route('contact') }}" class="text-lg hover:text-gray-300">Contact Us</a>
+                    <a href="{{ route('latestPosts') }}" class="text-lg hover:text-gray-300">Latest Posts</a>
                     <a href="{{ route('login') }}" class="text-lg hover:text-gray-300">Login</a>
                     <a href="{{ route('register') }}" class="text-lg hover:text-gray-300">Register</a>
                 </div>
