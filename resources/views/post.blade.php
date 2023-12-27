@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', '{{ $post->Title }}')
 @section('content')
 @if($user->id == $post->user_id)
     <button id="updateButton">Update</button>

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Contact Us')
 @section('content')
 <div class="container mx-auto py-8">
     <h1 class="text-3xl font-bold mb-6 text-center">Contact Us</h1>

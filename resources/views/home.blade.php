@@ -48,7 +48,7 @@
 @endsection --}}
 
 @extends('layouts.app')
-
+@section('title', 'Dashboard')
 @section('content')
 <div class="w-3/4 mx-auto">
     <div class="flex items-center justify-between mb-4">

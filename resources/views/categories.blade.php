@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Categories')
 @section('content')
 <h1 class="text-3xl font-bold text-center mb-4 ml-5">Categories</h1>
 <div class="container mx-auto py-8 relative">

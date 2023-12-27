@@ -1,4 +1,5 @@
  @extends('layouts.app')
+ @section('title', 'Profile')
 @section('content')
 <div class="container mx-auto flex justify-between items-start">
     <div class="button-profile ml-auto mb-8" style="float: right;">

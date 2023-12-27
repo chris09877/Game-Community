@@ -110,7 +110,7 @@
 @endsection --}}
 
 @extends('layouts.app')
-
+@section('title', 'Create Your Post')
 @section('content')
 <div class="flex justify-center items-center h-screen">
     <div class="text-center">

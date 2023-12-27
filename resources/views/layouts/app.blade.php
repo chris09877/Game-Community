@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,24 +8,19 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name') }}</title>
+    <title>{{ config('app.name') }} - @yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
-    {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <style>
-       
-
-
-
-    </style>
 </head>
+
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -32,7 +28,9 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -40,106 +38,152 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         @auth
-                            
-                                <li class="nav-item">
-                                    <a href="{{ route('home') }}" class="nav-link">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('profile') }}" class="nav-link">Profile</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('faq') }}" class="nav-link">FAQ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
-                                </li>
-                                    @if(auth()->user()->admin)
-                                        <li class="nav-item">
-                                            <a href="{{ route('settings') }}" class="nav-link">Settings</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('category') }}" class="nav-link">Categories</a>
-                                        </li>
-                                    @endif
 
+                        <li class="nav-item">
+                            <a href="{{ route('home') }}" class="nav-link">Dashboard</a>
+                        </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('faq') }}" class="nav-link">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
+                        </li>
+                        @if(auth()->user()->admin)
+                        <li class="nav-item">
+                            <a href="{{ route('settings') }}" class="nav-link">Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('category') }}" class="nav-link">Categories</a>
+                        </li>
+                        @endif
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
+
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                             document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
                         @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('faq') }}" class="nav-link">{{ __('FAQ') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('contact') }}" class="nav-link">{{ __('Contact Us') }}</a>
-                                </li>
-                            @endif
-                            
-                            @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a href="{{ route('faq') }}" class="nav-link">FAQ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
-                            </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
+                    <!-- Right Side Of Navbar -->
+<ul class="navbar-nav ms-auto">
+    @guest
+        @if (Route::currentRouteName() == 'login')
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('faq') }}" class="nav-link">{{ __('FAQ') }}</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('contact') }}" class="nav-link">{{ __('Contact Us') }}</a>
+            </li>
+        @elseif (Route::currentRouteName() == 'register')
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('faq') }}" class="nav-link">{{ __('FAQ') }}</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('contact') }}" class="nav-link">{{ __('Contact Us') }}</a>
+            </li>
+        @endif
+        
+    @endguest
 
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                    {{-- <ul class="navbar-nav ms-auto">
+                        @guest
+                        @if (Route::has('login'))
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('faq') }}" class="nav-link">{{ __('FAQ') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('contact') }}" class="nav-link">{{ __('Contact Us') }}</a>
+                        </li>
+
+
+                        @elseif (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('faq') }}" class="nav-link">{{ __('FAQ') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('contact') }}" class="nav-link">{{ __('Contact Us') }}</a>
+                        </li> --}}
+                        {{-- <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li> --}}
+
+                        {{-- @else --}}
+                        {{-- <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
+
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
-
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li> --}}
+                        {{-- @endif
+                        @endguest --}}
                         {{-- @auth
-                            
-                            <ul class="navbar-nav ">
-                                <li class="nav-item">
-                                    <a href="{{ route('home') }}" class="text-sm text-gray-700 underline">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('profile') }}" class="text-sm text-gray-700 underline">Profile</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('faq') }}" class="text-sm text-gray-700 underline">FAQ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('contact') }}" class="text-sm text-gray-700 underline">Contact Us</a>
-                                </li>
-                                    @if(auth()->user()->admin)
-                                        <!-- Show settings and categories links for admin users -->
-                                        <li class="nav-item">
-                                            <a href="{{ route('settings') }}" class="text-sm text-gray-700 underline">Settings</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('category') }}" class="text-sm text-gray-700 underline">Categories</a>
-                                        </li>
-                                    @endif
-                            </ul>
+
+                        <ul class="navbar-nav ">
+                            <li class="nav-item">
+                                <a href="{{ route('home') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('profile') }}" class="text-sm text-gray-700 underline">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('faq') }}" class="text-sm text-gray-700 underline">FAQ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('contact') }}" class="text-sm text-gray-700 underline">Contact Us</a>
+                            </li>
+                            @if(auth()->user()->admin)
+                            <!-- Show settings and categories links for admin users -->
+                            <li class="nav-item">
+                                <a href="{{ route('settings') }}" class="text-sm text-gray-700 underline">Settings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('category') }}" class="text-sm text-gray-700 underline">Categories</a>
+                            </li>
+                            @endif
+                        </ul>
 
 
                         @endauth --}}
@@ -153,4 +197,5 @@
         </main>
     </div>
 </body>
+
 </html>
