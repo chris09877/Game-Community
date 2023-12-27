@@ -14,40 +14,31 @@
 
 </head>
 
-<body class="flex items-center justify-center h-screen bg-slate-500">
-    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-        @if (Route::has('login'))
-        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            @auth
-            <a href="{{ route('home') }}" class="text-sm text-gray-700 underline">Dashboard</a>
-            <a href="{{ route('profile') }}" class="text-sm text-gray-700 underline">Profile</a>
-            <a href="{{ route('faq') }}" class="text-sm text-gray-700 underline">FAQ</a>
-            <a href="{{ route('contact') }}" class="text-sm text-gray-700 underline">Contact Us</a>
+<body class="bg-slate-500">
+    <div class="container mx-auto px-4">
+        <nav class="py-4">
+            <div class="flex items-center justify-between">
+                <div class="sm:hidden">
+                    <button class="text-white hover:text-gray-300 focus:outline-none">
+                        <!-- Your responsive menu icon here -->
+                    </button>
+                </div>
 
-            {{-- here i want the code for admins --}}
-                @if(auth()->user()->admin)
-                    <!-- Show settings and categories links for admin users -->
-                    <a href="{{ route('settings') }}" class="text-sm text-gray-700 underline">Settings</a>
-                    <a href="{{ route('category') }}" class="text-sm text-gray-700 underline">Categories</a>
-                @endif
-            
-            @else
-            <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Login</a>
-            <a href="{{ route('contact') }}" class="text-sm text-gray-700 underline">Contact Us</a>
-            <a href="{{ route('faq') }}" class="text-sm text-gray-700 underline">FAQ</a>
+                <div class="hidden sm:flex space-x-4 text-white">
+                    <a href="{{ route('faq') }}" class="text-lg hover:text-gray-300">FAQ</a>
+                    <a href="{{ route('contact') }}" class="text-lg hover:text-gray-300">Contact Us</a>
+                    <a href="{{ route('login') }}" class="text-lg hover:text-gray-300">Login</a>
+                    <a href="{{ route('register') }}" class="text-lg hover:text-gray-300">Register</a>
+                </div>
+            </div>
+        </nav>
+    </div>
 
-            @if (Route::has('register'))
-            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
-            <a href="{{ route('contact') }}" class="text-sm text-gray-700 underline">Contact Us</a>
-            <a href="{{ route('faq') }}" class="text-sm text-gray-700 underline">FAQ</a>
-
-            @endif
-            @endif
+    <div class="container mx-auto px-4">
+        <div class="relative flex items-top justify-center min-h-screen dark:bg-gray-900 sm:items-center sm:pt-0">
+            @yield('content')
         </div>
-       
-        @endif
-        @yield('content')
-
+    </div>
 </body>
 
 </html>
