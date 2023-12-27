@@ -5,7 +5,7 @@
 @section('content')
 <div class="flex justify-center items-center min-h-screen">
     <div class="w-2/3 p-6 bg-white shadow-md rounded-md">
-        <h1 class="text-4xl mb-8 text-center">Create question</h1>
+        <h1 class="text-4xl mb-8 text-center">Ask your question</h1>
 
         <form action="{{ route('submitFaq') }}" method="POST" enctype="multipart/form-data" id="post-form">
             @csrf

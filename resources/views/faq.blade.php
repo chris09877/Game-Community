@@ -82,10 +82,12 @@ style="float: right;"  class=" bg-blue-500 hover:bg-blue-700 text-black font-bol
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script>
+    'use strict';
     function toggleReplyInput(button) {
         let replyInput = document.getElementById("replyInput");
         replyInput.style.display = replyInput.style.display === "none" ? "block" : "none";
-    }
+        button.innerText = button.innerText === "Reply" ? "Cancel" : "Reply";
+        }
 
     function sendReply(button) {
         let replyText = document.getElementById("replyText").value;
