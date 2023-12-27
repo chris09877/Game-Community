@@ -22,8 +22,8 @@ class CreatePostController extends Controller
     public function store(Request $request){
         //ici ca prends les fields du form based on name
         $data = $request->validate([
-            'Title' => 'sometimes|string|max:255',
-            'Content' => 'sometimes|string',
+            'title' => 'sometimes|string|max:255',
+            'content' => 'sometimes|string',
             'media' => 'sometimes|file', // problem c'est que le field peut prendre images & videos mais y a pas ca soit cest vidéo soit images tema chat avec gpt
             // 'user2' => 'sometimes|int|max:11',
         ]);
@@ -40,8 +40,8 @@ class CreatePostController extends Controller
        if ($request->hasFile('media')) {
        //pas besoind de ca wlh: $mediaPath = $request->file('media')->store('media_folder');
        $post =  Post::create([
-        'Title' => $data['Title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
-        'Content' => $data['Content'],
+        'title' => $data['title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
+        'content' => $data['content'],
         'image' => $data['media'],
         'user_id' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
         'created_at' => $date,
@@ -51,8 +51,8 @@ class CreatePostController extends Controller
     else {
         //$mediaPath = null; // Set default value if no file is uploaded
         $post =  Post::create([
-            'title' => $data['Title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
-            'content' => $data['Content'],
+            'title' => $data['title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
+            'content' => $data['content'],
             'image' => null,
             'user_id' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
             'created_at' => $date,
@@ -70,7 +70,7 @@ class CreatePostController extends Controller
 
         // ]);
         //dd($post);
-        return response()->json(['message' => 'Post created successfully']);
+        return redirect('dashboard')->with('success', 'Post created successfully');    
     }
 
     public function show($id){
@@ -99,6 +99,5 @@ class CreatePostController extends Controller
 
         ]);
     
-        return response()->json(['message' => 'Post updated successfully']); 
-    }
+        return redirect()->back()->with('success', 'Post created successfully');    }
 }

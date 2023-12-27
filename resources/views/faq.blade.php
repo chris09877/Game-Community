@@ -7,17 +7,19 @@
 
 <button onclick="window.location = '{{route('faq.create')}}'"
 style="float: right;"  class=" bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border mr-4" >Create Question</button>
-@if($user->admin)
-<button onclick="window.location = '{{route('category')}}'"
-    class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Categories</button>
+@if($user != null)
+    @if($user->admin)
+    <button onclick="window.location = '{{route('category')}}'"
+        class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Categories</button>
+    @endif
 @endif
-
 @foreach($categories as $category)
     <h3 class="text-black font-bold py-2 px-4 mr-4">{{$category->name}}</h3>
 
     @foreach($allFaqs as $faq)
         @if($faq->category_id === $category->id)
             <div class="border p-4 mb-4">
+                @if($user != null)
                 @if($user->admin)
                         <div class="flex items-center">
                             <div>
@@ -27,12 +29,16 @@ style="float: right;"  class=" bg-blue-500 hover:bg-blue-700 text-black font-bol
                                     <button style="float: right;" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border" type="submit">Delete FAQ</button>
                                 </form>
                             </div>
-                @endif
-                <a href="{{ route('faq.show', ['id' => $faq->id]) }}">
+                            <a href="{{ route('faq.show', ['id' => $faq->id]) }}">
+                                <p class="font-bold">{{$faq->title}}</p>
+                                <p>{{$faq->text}}</p>
+                            </a>
+                @else
                     <p class="font-bold">{{$faq->title}}</p>
                     <p>{{$faq->text}}</p>
-                </a>
-
+                
+                @endif
+              @endif
                 @auth
                     
                     <div class="flex items-center">

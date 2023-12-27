@@ -51,6 +51,11 @@
 @section('title', 'Dashboard')
 @section('content')
 <div class="w-3/4 mx-auto">
+    @if(session('success'))
+    <div  id="success-message" class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
     <div class="flex items-center justify-between mb-4">
         <button onclick="window.location='{{ route('post.create') }}'" style="float: right;"
             class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">CREATE POST</button>
@@ -91,3 +96,10 @@
     </div>
 </div>
 @endsection
+<script>
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('success-message').style.display = 'none';
+        }, 2000); // 2000 milliseconds = 2 seconds
+    });
+</script>

@@ -47,8 +47,10 @@ Route::get("/faq",[App\Http\Controllers\FaqController::class,"index"])->name('fa
 Route::delete('/faq/{id}', [App\Http\Controllers\FaqController::class,"destroy"])->name('faq.destroy');
 Route::get('/faq/{id}', [App\Http\Controllers\FaqController::class,"show"])->name('faq.show');
 Route::get('/create/faq', 'App\Http\Controllers\FaqController@create')->name('faq.create');
-Route::post("/faq/create",[App\Http\Controllers\FaqController::class,"store"])->name('submitFaq');
-Route::post("/faq/{id}",[App\Http\Controllers\FaqController::class,"store"])->name('faq.update');
+Route::post("/create/faq",'App\Http\Controllers\FaqController@store')->name('submitFaq');
+// Route::post("/create/faq",[App\Http\Controllers\FaqController::class,"store"])->name('submitFaq');
+
+Route::post("/faq/{id}",[App\Http\Controllers\FaqController::class,"update"])->name('faq.update');
 
 
 //ROUTES COMMENTS

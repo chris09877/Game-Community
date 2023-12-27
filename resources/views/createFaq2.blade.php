@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Ask your Question')
+@section('title', 'Ask Your Question')
 @section('content')
 
     <h1 class="text-4xl mb-8 text-center ">Create question</h1>

@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Faq;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Faq;
 
 class FaqController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -54,21 +51,21 @@ class FaqController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'title' => 'required|string',
             'text' => 'required|string',
             'category_id' => 'required|string',
-            // Add any other validation rules as needed
         ]);
 
-
-        // Create a new FAQ using the validated data and the retrieved category ID
         $faq = Faq::create([
             'text' => $validatedData['text'],
             'category_id' => $validatedData['category_id'],
             'userID' => auth()->id(),
             'Date' => now(),
         ]);
+        $faq->save();
+        dd($faq);
         return redirect()->route('faq')->with("status", "FAQ question successfully created");
     }
 

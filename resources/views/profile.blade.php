@@ -41,6 +41,7 @@
     @if($userPosts->count() > 0)
     <!-- Display user posts here -->
     @foreach($userPosts as $post)
+    <a href="{{ route('post.show', ['id' => $post->id]) }}">
     <div class="post border rounded p-4 mb-4">
         <h3 class="text-xl mb-2">{{$post->Title}}</h3>
         @if($post->image != null)
@@ -58,6 +59,7 @@
         </span>
         @endif
     </div>
+</a>
     @endforeach
     @else
     <h3 class="text-2xl">Nothing posted yet</h3>
