@@ -10,7 +10,8 @@
 
     <div class="profile-info mt-20 flex flex-col items-start mr-auto">
         <!-- Profile photo here -->
-        <img src="" alt="Profile Photo" class="rounded-full w-24 h-24 mb-4">
+       
+        <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="Profile Picture">
 
         <div>
             <h2 class="text-3xl font-bold mb-2">{{$user->name}}</h2>

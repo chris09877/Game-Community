@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="flex flex-col mb-4">
-                    <label for="Avatar" class="text-lg mb-2">Upload Image/Video:</label>
+                    <label for="Avatar" class="text-lg mb-2">Upload profile picture:</label>
                     <input type="file" id="Avatar" name="Avatar" class="border rounded-md py-2 px-3">
                 </div>
 
