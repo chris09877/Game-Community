@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('password123'),
                 'Bio' => 'Some bio information about John Doe',
                 'admin' => true, 
-                'avatar' => null,
+                'avatar' => 'profiles/1.jpg',
             ],
             [
                 'name' => 'Jane Smith',
@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('password456'),
                 'Bio' => 'Some bio information about Jane Smith',
                 'admin' => false, 
-                'avatar' => null,
+                'avatar' => 'profiles/2.jpg',
 
             ],
             [
@@ -41,7 +41,7 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('Password!321'),
                 'Bio' => 'Some bio information about admin',
                 'admin' => true, 
-                'avatar' => null,
+                'avatar' => 'profiles/3.jpg',
 
             ],
         

@@ -47,7 +47,7 @@
         <h3 class="text-xl mb-2">{{$post->Title}}</h3>
         @if($post->image != null)
         <div class="media-post mb-2">
-            <h1>ici il y aura image</h1>
+            <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image">
         </div>
         <p class="text-gray-700 mb-2">{{$post->content}}</p>
         <span class="text-gray-500">
