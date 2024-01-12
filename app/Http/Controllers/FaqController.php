@@ -117,7 +117,6 @@ class FaqController extends Controller
             'title' => 'required|string',
             'text' => 'required|string',
             'categories' => 'required|string',
-            // Add any other validation rules as needed
         ]);
 
         $categoryId = intval($validatedData['categories']);
