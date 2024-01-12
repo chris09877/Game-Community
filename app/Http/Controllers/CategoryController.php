@@ -115,10 +115,47 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    // public function destroy($id)
+    // {
+    //     //dd("jdkjdfkd");
+    //     $category = Category::find($id);
+    //     //dd($id,$category);
+    // if (!$category) {
+        
+    //     return redirect()->back()->with('error', 'Category not found');
+    // }
+
+    // $category->delete();
+
+    // return redirect()->route('category');
+    // }
+
+    public function destroy(Request $request, $id)
+{
+    $category = Category::find($id);
+
+    if (!$category) {
+        return response()->json(['success' => false, 'message' => 'Category not found'], 404);
+    }
+
+    $category->delete();
+
+    if ($request->ajax()) {
+        return response()->json(['success' => true, 'message' => 'Category deleted successfully']);
+    }
+
+    return redirect()->route('category')->with('success', 'Category deleted successfully');
+}
+
+    public function destroy2(Request $request )
     {
-        dd("jdkjdfkd");
-        $category = Category::find($id);
+       // dd("jdkjdfkd");
+
+        $validatedData = $request->validate([
+            'id' => 'required|numeric',
+        ]);
+        //dd("jdkjdfkd");
+        $category = Category::find($validatedData['id']);
 
     if (!$category) {
         

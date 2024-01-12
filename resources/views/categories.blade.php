@@ -25,8 +25,8 @@
                 </td>
                 <td class="action">
                     <button
-                        class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
-                        data-id="{{ $category->id }}">Delete</button>
+                        class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border  delete-btn"
+                        data-id="{{ $category->id }}" >Delete</button>
                 </td>
             </tr>
             @endforeach
@@ -65,23 +65,38 @@
 
 <script>
     'use strict';
-    //delete
     $(document).ready(function () {
-    $('.action button:first').click(function() {
+
+    //delete
+   
+    $('.delete-btn').click(function() {
         let id = $(this).data('id');
+        
         console.log(`${id}`);
         $.ajax({
-            url: "{{ route('category.delete',['id' => " + id + "]) }}",
-            type: 'DELETE',
+            url: "http://localhost:8000/categories/" + id,
+            type: "delete",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Include CSRF token
+            },
             success: function(response) {
                 if (response.success) {
                     $('#row_' + id).remove();
                 }
-            }
+            },
+            
+            error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.log(xhr.responseText);
+                    console.log(ajax.url);
+                }
         });
         console.log(`${id}`);
 
     });
+   
+
+
 
     // Edit Category Name
     $('.category-name').click(function() {

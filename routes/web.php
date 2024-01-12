@@ -87,9 +87,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get("/settings", [App\Http\Controllers\SettingsController::class, "index"])->name('settings');
 //ROUTE CATEGORIES
     Route::get("/categories", [App\Http\Controllers\CategoryController::class, "index"])->name('category');
+    Route::get("/categories", 'App\Http\Controllers\CategoryController@index')->name('category');
+
     Route::post("/categories", [App\Http\Controllers\CategoryController::class, "store"])->name('category.store');
     Route::post('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
     Route::delete('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('category.delete');
+    Route::delete('/categories', [App\Http\Controllers\CategoryController::class, 'destroy2'])->name('category.delete2');
+    // Route::delete('/categories/{id}', 'App\Http\Controllers\CategoryController@destroy')->name('category.delete');
+
 });
 
 
