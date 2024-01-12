@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Faq;
+use Illuminate\Validation\ValidationException;
 
 class FaqController extends Controller
 {
@@ -51,21 +52,28 @@ class FaqController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->validate(['title']));
 
-        $validatedData = $request->validate([
-            'title' => 'required|string',
-            'text' => 'required|string',
-            'category_id' => 'required|string',
-        ]);
-
+        try {
+            $validatedData = $request->validate([
+                'title' => 'required|string',
+                'text' => 'required|string',
+                'categories' => 'required|string',
+            ]);
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        }
+        
+        //dd($validatedData);
         $faq = Faq::create([
+            'title' => $validatedData['title'],
             'text' => $validatedData['text'],
-            'category_id' => $validatedData['category_id'],
-            'userID' => auth()->id(),
-            'Date' => now(),
+            'category_id' => $validatedData['categories'],
+            'user_id' => auth()->id(),
+            'created_at' => now(),
         ]);
         $faq->save();
-        dd($faq);
+       // dd($faq);
         return redirect()->route('faq')->with("status", "FAQ question successfully created");
     }
 

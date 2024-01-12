@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 @section('title', 'Ask your Question')
 @section('content')
 
@@ -33,4 +33,4 @@
     
     
 
-@endsection
+@endsection --}}

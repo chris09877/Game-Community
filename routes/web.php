@@ -38,11 +38,12 @@ Route::get("/login", [\App\Http\Controllers\Auth\LoginController::class, "index"
 //LATEST POST
 Route::get('/latest-posts', [LatestNewsController::class, 'index'])->name('latestPosts');
 
-//ROUTE TO CREATE POST
+//ROUTE POST
 Route::get("/post/create", [App\Http\Controllers\CreatePostController::class,"index"])->name('post.create');
 Route::post("/post/create", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
 Route::get("/post/{id}", [App\Http\Controllers\CreatePostController::class,"show"])->name('post.show');
 Route::post("/post/{id}", [App\Http\Controllers\CreatePostController::class,"update"])->name('post.update');
+Route::delete("/post/{id}", [App\Http\Controllers\CreatePostController::class,"delete"])->name('post.destroy');
 
 
 //ROUTE PROFILE
@@ -61,7 +62,7 @@ Route::get("/faq",[App\Http\Controllers\FaqController::class,"index"])->name('fa
 Route::delete('/faq/{id}', [App\Http\Controllers\FaqController::class,"destroy"])->name('faq.destroy');
 Route::get('/faq/{id}', [App\Http\Controllers\FaqController::class,"show"])->name('faq.show');
 Route::get('/create/faq', 'App\Http\Controllers\FaqController@create')->name('faq.create');
-Route::post("/create/faq",'App\Http\Controllers\FaqController@store')->name('submitFaq');
+Route::post("/create/faq",/*'App\Http\Controllers\FaqController@store'*/[App\Http\Controllers\FaqController::class,"store"])->name('submitFaq');
 // Route::post("/create/faq",[App\Http\Controllers\FaqController::class,"store"])->name('submitFaq');
 
 Route::post("/faq/{id}",[App\Http\Controllers\FaqController::class,"update"])->name('faq.update');
@@ -74,7 +75,6 @@ Route::post('/comments/create', [App\Http\Controllers\CommentController::class, 
 
 Auth::routes();
 
-//Route::post("/createPost", )
 //ROUTE CONTACT 
 Route::get('/contact', [App\Http\Controllers\ContactController::class,"index"])->name('contact');
 Route::post('/contact', [App\Http\Controllers\ContactController::class,"sendEmail"])->name('sendEmail');

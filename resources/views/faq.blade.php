@@ -3,7 +3,7 @@
 @section('content')
 
 
-<h1 class="text-3xl font-bold mb-6 text-center">Themes</h1>
+<h1 class="text-3xl font-bold mb-6 text-center">FAQ</h1>
 
 <button onclick="window.location = '{{route('faq.create')}}'"
 style="float: right;"  class=" bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border mr-4" >Create Question</button>

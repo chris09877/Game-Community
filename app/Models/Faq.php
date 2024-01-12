@@ -12,8 +12,10 @@ class Faq extends Model
     protected $fillable = [
         'title',
         'text',
-        'categories',
-        'userID',
+        'category_id',
+        'user_id',
+        'created_at',
+        'updated_at'
        
         
     ];
