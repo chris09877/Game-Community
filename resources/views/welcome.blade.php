@@ -7,7 +7,6 @@
             <div class="mx-auto mb-8">
             <img src="{{ asset('storage/ehb-logo.jpg') }}" alt="Community Game EhB" class="mx-auto mb-8">
         </div>
-            <!-- Large h1 heading -->
             <h1 class="text-white text-4xl font-bold">Community Game EHB</h1>
         </div>
         @endsection

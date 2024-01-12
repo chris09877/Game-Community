@@ -39,14 +39,30 @@ class CreatePostController extends Controller
 
        if ($request->hasFile('media')) {
        //pas besoind de ca wlh: $mediaPath = $request->file('media')->store('media_folder');
+    //    $file = $request->file('media');
+    //    $filename = $id . '.' . $file->getClientOriginalExtension();
+
+    //    // Store the file in the public disk under the 'avatars' folder
+    //    $path = $file->storeAs('posts', $filename, 'public');
+
+       // Update the user's profile picture in the database
+       //$post->update(['image' => $path]);
        $post =  Post::create([
         'title' => $data['title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
         'content' => $data['content'],
-        'image' => $data['media'],
+        'image' => null,//$path,//data['media'],
         'user_id' => $userId,//8,//$data['user_id'],//(int)Auth::id(),
         'created_at' => $date,
 
     ]);
+
+    $file = $request->file('media');
+       $filename = $post->id . '.' . $file->getClientOriginalExtension();
+
+       // Store the file in the public disk under the 'avatars' folder
+       $path = $file->storeAs('posts', $filename, 'public');
+       $post->update(['image' => $path]);
+       $post->save();
     } 
     else {
         //$mediaPath = null; // Set default value if no file is uploaded
@@ -82,22 +98,98 @@ class CreatePostController extends Controller
     }
 
     public function update(Request $request, $id){
-        $data = $request->validate([
-            'content' => 'sometimes|string',
-            'media' => 'sometimes|string|nullable',
-            'title' => 'sometimes|string|max:255',
-            'updated_at' => 'sometimes|date',
-        ]);
-    // dd($id);
-        // Update the post with the new data
-        $post = Post::findOrFail($id);
-        $post->update([
-            'image' => $data['media'],
-            'title' => $data['title'],
-            'updated_at' => $data['updated_at'],
-            'content' => $data['content'],
+    //     $post = Post::findOrFail($id);
 
-        ]);
+    //     $data = $request->validate([
+    //         'content' => 'sometimes|string',
+    //         'media' => 'sometimes|file|nullable',
+    //         'title' => 'sometimes|string|max:255',
+    //         'updated_at' => 'sometimes|date',
+    //     ]);
+
+    //     if ($request->hasFile('media')) {
+    //         $file = $request->file('media');
+    //         $filename = $id . '.' . $file->getClientOriginalExtension();
+    //         dd($file);
+    //         // Store the file in the public disk under the 'avatars' folder
+    //         $path = $file->storeAs('posts', $filename, 'public');
     
-        return redirect()->back()->with('success', 'Post created successfully');    }
+    //         // Update the user's profile picture in the database
+    //         $post->update([
+    //             'image' => $path,
+    //             'title' => $data['title'],
+    //             'updated_at' => $data['updated_at'],
+    //             'content' => $data['content'],
+     
+    //     ]);
+           
+    //     }
+
+    // // dd($id);
+    //     // Update the post with the new data
+    //     else {
+    //         $post->update([
+    //              'title' => $data['title'],
+    //              'updated_at' => $data['updated_at'],
+    //              'content' => $data['content'],
+     
+    //          ]);
+    //     }
+        
+    //     $post->save();
+    $post = Post::findOrFail($id);
+dd($post);
+$data = $request->validate([
+    'content' => 'sometimes|string',
+    'media' => 'sometimes|file|nullable',
+    'title' => 'sometimes|string|max:255',
+    'updated_at' => 'sometimes|date',
+]);
+
+if ($request->hasFile('media')) {
+    $file = $request->file('media');
+    $filename = $id . '.' . $file->getClientOriginalExtension();
+dd("fhjj");
+    // Store the file in the public disk under the 'posts' folder (adjust folder name if needed)
+    $path = $file->storeAs('posts', $filename, 'public');
+
+    // Update the post with the new data and media file path
+    $post->update([
+        'image' => $path,
+        'title' => $data['title'],
+        'updated_at' => $data['updated_at'],
+        'content' => $data['content'],
+    ]);
+} else {
+    // Update the post with the new data, excluding media file path
+    $post->update([
+        'title' => $data['title'],
+        'updated_at' => $data['updated_at'],
+        'content' => $data['content'],
+    ]);
+}
+
+// The update method already saves the changes to the database
+// $post->save(); // You don't need this line
+
+        return redirect()->back()->with('success', 'Post created successfully');    
+    }
+
+    public function delete($id)
+{
+    // Retrieve the post by ID
+    $post = Post::find($id);
+
+    // Check if the post exists
+    if (!$post) {
+        return redirect()->back()->with('error', 'Post not found');
+    }
+
+    // Delete the post
+    $post->delete();
+
+    // Redirect to a specific route or perform any other action
+    return redirect()->route('home')->with('success', 'Post deleted successfully');
+}
+
 }

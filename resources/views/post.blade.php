@@ -2,48 +2,53 @@
 @section('title', '{{ $post->Title }}')
 @section('content')
 @if($user->id == $post->user_id || $user->admin)
-    <button id="updateButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-end">
-        Update
-    </button>
+<button id="updateButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-end">
+    Update
+</button>
 @endif
 
 <div class="max-w-3xl mx-auto mt-8 px-4">
     <h1 class="text-3xl font-bold">{{ $post->title }}</h1>
 
     <input type="text" id="title" class="border rounded-md py-2 px-3 mt-4 hidden" placeholder="{{$post->title}}">
-    <img src="{{ $post->image }}" alt="Post media" id="media" class="mt-4">
+    <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="mt-4" id="old-media">
+
     <input type="file" id="media" class="mt-4 hidden">
     <p id="old-content" class="mt-4">Content: {{ $post->content }}</p>
     <input type="text" id="new-content" class="border rounded-md py-2 px-3 mt-4 hidden"
         placeholder="{{$post->content}}">
     <p class="mt-4">Creation Date: {{ $post->created_at }}</p>
     @if($user->id == $post->user_id || $user->admin)
-        <button id="saveButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 hidden">
-            Save
-        </button>
-        <button onclick="window.location='{{route('home')}}'"
-            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mt-4 hidden" id="cancelBtn">
-            Cancel
-        </button>
+    <button id="saveButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 hidden">
+        Save
+    </button>
+    <button onclick="window.location='{{route('home')}}'"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mt-4 hidden" id="cancelBtn">
+        Cancel
+    </button>
+    <button id="deleteButton2" data-id="{{ $post->id }}"
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2 hidden">
+        Delete
+    </button>
     @endif
 </div>
 
 <div class="max-w-3xl mx-auto mt-8 px-4">
     <h2 class="text-xl font-bold">Comments of {{ $post->Title }}</h2>
     @foreach ($comments as $comment)
-        <div id="comment_{{$comment->id}}" class="mt-4 border-b pb-4">
-            <p class="font-bold">User: {{ $comment->user_id }}</p>
-            <p class="mt-2">Text: {{ $comment->text }}</p>
-            <p class="text-sm text-gray-500 mt-2">Posted At: {{ $comment->created_at }}</p>
-            <button id="deleteButton" data-id="{{ $comment->id }}"
-                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2">
-                Delete
-            </button>
-        </div>
+    <div id="comment_{{$comment->id}}" class="mt-4 border-b pb-4">
+        <p class="font-bold">User: {{ $comment->user_id }}</p>
+        <p class="mt-2">Text: {{ $comment->text }}</p>
+        <p class="text-sm text-gray-500 mt-2">Posted At: {{ $comment->created_at }}</p>
+        <button id="deleteButton" data-id="{{ $comment->id }}"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2">
+            Delete
+        </button>
+    </div>
     @endforeach
 </div>
 
-@endsection 
+@endsection
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -56,10 +61,13 @@
             $('img#media').attr('contenteditable', 'true');
             $('h1').hide();
             $('p#old-content').hide();
+            $('img#old-media').hide();
             $('#title').show().focus();
             $('#new-content').show().focus();
+            $('#media').show().focus();
             $('#saveButton').show().focus();
             $('#cancelBtn').show().focus();
+            $('#deleteButton2').show().focus();
 
             // $('#title').show().focus()
 
@@ -77,13 +85,13 @@
             console.log(`id:${id}`);
             console.log(`${date}    ${content}     ${media}`);
             // Send the updated data to the server using AJAX
-            $.ajax({
+            $.post({
                 url:"{{ route('post.update', ['id' => $post->id]) }}",
-                method: 'POST',
+                //method: 'POST',
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
                 data: {
-                    media: media || null,
+                    media: media,// || null,
                     title: title || $('h1').text(),
                     content: content || $('p#old-content').text(),
                     updated_at: formatDate(date)
@@ -127,6 +135,25 @@
                 },
                 success: function(response) {
                     $('#comment_' + id).remove();
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        $('#deleteButton2').click(function() {
+            let id = $(this).data('id');
+            $.ajax({
+                url: "{{ route('post.destroy',['id' => " + id + "]) }}",
+                type: 'DELETE',
+                data: {
+                    postId: id
+                },
+                success: function(response) {
+                    $('#post_' + id).remove();
                     console.log(response);
                 },
                 error: function(xhr, status, error) {

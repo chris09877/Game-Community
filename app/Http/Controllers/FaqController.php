@@ -116,20 +116,23 @@ class FaqController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string',
             'text' => 'required|string',
-            'category_id' => 'required|string',
+            'categories' => 'required|string',
             // Add any other validation rules as needed
         ]);
 
-
+        $categoryId = intval($validatedData['categories']);
         //checking if string = existing category name 
-        $category = Category::where('name', $validatedData['category_id'])->first();
+        $category = Category::where('id', $categoryId);//->first();
+        //dd($category);  
         if ($category !== null) {
             $faq->update([
                 'title' => $validatedData['title'],
                 'text' => $validatedData['text'],
-                'category_id' => $category->id,
+                'category_id' => $categoryId,
+                'updated_at' => now(),
 
             ]);
+           // dd($categoryId, $faq);
             return redirect()->route('faq.show', $faq->id)->with('success', 'FAQ updated successfully');
         } else {
             return redirect()->route('faq.show', $faq->id)->with('error', 'FAQ not updated');
