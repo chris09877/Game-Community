@@ -44,13 +44,13 @@ style="float: right;"  class=" bg-blue-500 hover:bg-blue-700 text-black font-bol
                     
                     <div class="flex items-center">
                         <button onclick="toggleReplyInput(this)"
-                                class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Reply
+                                class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border" id="toggleReplyInput_{{$faq->id}}">Reply
                         </button>
                        
-                        <div id="replyInput" class="hidden ml-4" style="display: none;">
-                            <input type="text" id="replyText" class="border rounded px-2 py-1">
+                        <div id="replyInput_{{$faq->id}}" class="hidden ml-4" style="display: none;">
+                            <input type="text" id="replyText_{{$faq->id}}" class="border rounded px-2 py-1">
                             <button onclick="sendReply(this)"
-                                    id="{{$faq->id}}"
+                                    id="btnSend_{{$faq->id}}"
                                     class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Send
                             </button>
                         </div>
@@ -75,6 +75,7 @@ style="float: right;"  class=" bg-blue-500 hover:bg-blue-700 text-black font-bol
                     @endif
                 </div>
             </div>
+            
         @endif
     @endforeach
 @endforeach
@@ -85,18 +86,27 @@ style="float: right;"  class=" bg-blue-500 hover:bg-blue-700 text-black font-bol
 <script>
     'use strict';
     function toggleReplyInput(button) {
-        let replyInput = document.getElementById("replyInput");
+        //getiing the id value so i can select the replyInput btn
+        // let button = document.querySelector('[id^="toggleReplyInput_"]');
+        console.log(button.id);
+        console.log(button.id.split("_")[1]);
+        let id = button.id.split("_")[1];
+        let valueReplyText = document.getElementById("replyText_" + id).value;
+console.log(valueReplyText);
+        let replyInput = document.getElementById("replyInput_" + id);
         replyInput.style.display = replyInput.style.display === "none" ? "block" : "none";
         button.innerText = button.innerText === "Reply" ? "Cancel" : "Reply";
         }
 
     function sendReply(button) {
-        let replyText = document.getElementById("replyText").value;
+        console.log(button.id);
+        let id = button.id.split("_")[1];
+
+        let replyText = document.getElementById("replyText_"+ id).value;
         if (replyText.trim() !== "") {
             // Send the reply to the database
             // You can use AJAX or submit the form to a backend endpoint
             // Example using AJAX:
-            let id = button.id;
             console.log(`${id}`);
             $.ajax({
 
