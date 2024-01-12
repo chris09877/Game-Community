@@ -12,15 +12,15 @@
         </thead>
         <tbody>
             @foreach ($categories as $category)
-            <tr id="row_{{ $category->id }}" style="cursor: pointer;" >
+            <tr id="row_{{ $category->id }}" style="cursor: pointer;"  >
                 <td>
                     <span class="category-name">{{ $category->name }}</span>
                     <input type="text" class="editCategoryInput" style="display:none;">
                     <button
-                        class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
+                        class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border saveBtn"
                         id="saveBtn" style="display:none;">Save</button>
                     <button
-                        class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
+                        class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border cancelBtn"
                         id="cancelBtn" style="display:none;">Cancel</button>
                 </td>
                 <td class="action">
@@ -103,26 +103,30 @@
         let $td = $(this).closest('td');
         $td.find('.category-name').hide();
         $td.find('.editCategoryInput').show().focus();
-        $td.find('.saveBtn, .cancelBtn').show();
+        $td.find('#saveBtn, #cancelBtn').show();
     });
 
-    // Cancel Edit
-    $('#cancelBtn').click(function() {
+    // Cancel Edit les function marche avec class name mais pas id 
+    $('.cancelBtn').click(function() {
         let $td = $(this).closest('td');
         $td.find('.category-name').show();
         $td.find('.editCategoryInput').hide();
-        $td.find('.saveBtn, .cancelBtn').hide();
+        $td.find('#saveBtn, #cancelBtn').hide();
     });
 
-    // Update Category Name
-    $('#saveBtn').click(function() {
+    // Update Category Name les function marche avec class name mais pas id 
+    $('.saveBtn').click(function() {
         let $td = $(this).closest('td');
         let id = $td.closest('tr').attr('id').replace('row_', '');
         let newName = $td.find('.editCategoryInput').val();
-
+        console.log("au dessus ajax");
         $.ajax({
-            url: "{{ route('category.update',['id' => " + id + "]) }}",
-            type: 'POST',
+            
+            url: "http://localhost:8000/categories/" + id,//url: "{{ route('category.update',['id' => " + id + "]) }}",
+            type: 'Patch',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Include CSRF token
+            },
             data: { name: newName },
             success: function(response) {
                 if (response.success) {

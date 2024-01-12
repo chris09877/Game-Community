@@ -95,16 +95,18 @@ class CategoryController extends Controller
 
         // Validate the form data
         $validatedData = $request->validate([
-            'categoryName' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
     
         // Update the category's name
-        $category->name = $validatedData['categoryName'];
+        $category->name = $validatedData['name'];
         // Update any other properties of the category as needed
     
         // Save the updated category to the database
         $category->save();
-    
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Category updated successfully']);
+        }
         // Redirect to the index page or any other page as desired
         return redirect()->route('category');
     }
@@ -115,20 +117,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function destroy($id)
-    // {
-    //     //dd("jdkjdfkd");
-    //     $category = Category::find($id);
-    //     //dd($id,$category);
-    // if (!$category) {
-        
-    //     return redirect()->back()->with('error', 'Category not found');
-    // }
-
-    // $category->delete();
-
-    // return redirect()->route('category');
-    // }
+    
 
     public function destroy(Request $request, $id)
 {
@@ -147,23 +136,5 @@ class CategoryController extends Controller
     return redirect()->route('category')->with('success', 'Category deleted successfully');
 }
 
-    public function destroy2(Request $request )
-    {
-       // dd("jdkjdfkd");
-
-        $validatedData = $request->validate([
-            'id' => 'required|numeric',
-        ]);
-        //dd("jdkjdfkd");
-        $category = Category::find($validatedData['id']);
-
-    if (!$category) {
-        
-        return redirect()->back()->with('error', 'Category not found');
-    }
-
-    $category->delete();
-
-    return redirect()->route('category');
-    }
+    
 }
