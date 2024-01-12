@@ -12,7 +12,7 @@
         </thead>
         <tbody>
             @foreach ($categories as $category)
-            <tr id="row_{{ $category->id }}">
+            <tr id="row_{{ $category->id }}" style="cursor: pointer;" >
                 <td>
                     <span class="category-name">{{ $category->name }}</span>
                     <input type="text" class="editCategoryInput" style="display:none;">
@@ -35,7 +35,7 @@
     <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border mt-2 mr-8"
     onclick="window.location='{{ route('faq') }}'">Cancel</button>
     <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
-    id="addCategoryButton">
+    id="addCategoryButton" >
     Add Category
 </button>
 </div>
@@ -129,15 +129,17 @@
 
 
    
-        $("#addCategoryModal").on("click", function () {
+        $("#addCategoryButton").on("click", function () {
     // Show the category name label and input field
     $("#categoryName").show();
     $("label[for='categoryName']").show();
-    showAddCategoryModal();
+    $("#addCategoryModal").dialog("open");
+    //showAddCategoryModal();
     });
     
 
     function submitCategoryForm() {
+        console.log("heelo4");
         let data = $('#category-form').serialize();
         $.ajax({
             url: "{{ route('category.store') }}",
@@ -150,6 +152,7 @@
                 console.log('Category added successfully');
                 $("#addCategoryModal").dialog("close");
                 // You can update the UI to display the newly added category without reloading the page
+                location.reload();
             },
             error: function (xhr, status, error) {
                 console.log(xhr.responseText);

@@ -8,10 +8,11 @@
 <button onclick="window.location = '{{route('faq.create')}}'"
 style="float: right;"  class=" bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border mr-4" >Create Question</button>
 @if($user != null)
-    @if($user->admin)
+    {{-- REDUDANT ALREADY IN NAV
+        @if($user->admin)
     <button onclick="window.location = '{{route('category')}}'"
         class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Categories</button>
-    @endif
+    @endif --}}
 @endif
 @foreach($categories as $category)
     <h3 class="text-black font-bold py-2 px-4 mr-4">{{$category->name}}</h3>
