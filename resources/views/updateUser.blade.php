@@ -43,7 +43,7 @@
                 </div>
                 @endif
 
-                <input type="number" name="user" id="user_id" style="display: none;" value="{{Auth::id()}}">
+                <input type="number" name="user" id="user_id" style="display: none;" value="{{$user->id}}">
 
                 <input type="submit" value="Update"
                     class="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded border">
