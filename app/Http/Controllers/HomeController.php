@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Comment;
 
 class HomeController extends Controller
 {
@@ -31,6 +32,8 @@ class HomeController extends Controller
         $userPosts = Post::orderBy('created_at', 'desc')->get();
         $allPosts = Post::all();
         $allPosts = Post::orderBy('created_at', 'desc')->get();
-        return view('home', ['userPosts' => $userPosts, 'allPosts' => $allPosts]);
+        $comments = Comment::whereNotNull('post_id')->get();
+
+        return view('home', ['userPosts' => $userPosts, 'allPosts' => $allPosts, 'comments'=>$comments]);
     }
 }

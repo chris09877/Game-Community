@@ -44,15 +44,31 @@
                 </a>
                 <div class="flex items-center mt-4">
                     <button onclick="toggleReplyInput(this)"
-                        class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Reply
+                        class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border" id="toggleReplyInput_{{$post->id}}">Reply
                     </button>
-                    <div id="replyInput" class=" ml-4" style="display: none;">
+                    <div id="replyInput_{{$post->id}}" class=" ml-4" style="display: none;">
 
-                        <input type="text" id="replyText" class="border rounded px-2 py-1">
+                        <input type="text" id="replyText_{{$post->id}}" class="border rounded px-2 py-1">
                         <button onclick="sendReply(this)" id="{{$post->id}}"
                             class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Send
                         </button>
                     </div>
+                </div>
+                <div class="border-t mt-4 pt-4">
+                    <h2 class="text-black font-bold py-2 px-4">Comments</h2>
+                    @if($comments->where('post_id', $post->id)->isEmpty())
+                        <p>There are no answers yet to this question.</p>
+                    @else
+                        @foreach($comments as $comment)
+                            @if($comment->post_id === $post->id)
+                                <div class="border rounded p-2 mb-2">
+                                    <p>{{$comment->user->name}}</p>
+                                    <p>{{$comment->text}}</p>
+                                    <p>{{$comment->created_at}}</p>
+                                </div>
+                            @endif
+                        @endforeach
+                    @endif
                 </div>
             </div>
             @endforeach
@@ -61,6 +77,9 @@
     </div>
 
     @endsection
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script>
         // window.addEventListener('load', function() {
         setTimeout(function() {
@@ -68,18 +87,20 @@
         }, 2000); // 2000 milliseconds = 2 seconds
         
         function toggleReplyInput(button) {
-        let replyInput = document.getElementById("replyInput");
+        let id = button.id.split("_")[1];    
+        let replyInput = document.getElementById("replyInput_"+id);
         replyInput.style.display = replyInput.style.display === "none" ? "block" : "none";
         button.innerText = button.innerText === "Reply" ? "Cancel" : "Reply";
         }
 
     function sendReply(button) {
-        let replyText = document.getElementById("replyText").value;
+        let id = button.id;    
+        let replyText = document.getElementById("replyText_" + id).value;
         if (replyText.trim() !== "") {
             // Send the reply to the database
             // You can use AJAX or submit the form to a backend endpoint
             // Example using AJAX:
-            let id = button.id;
+            // let id = button.id;
             console.log(`${id}`);
             $.ajax({
 
@@ -87,8 +108,8 @@
                 method: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data: { reply: replyText,
-                        post_id: null,
-                        faq_id: id,
+                        post_id: id,
+                        faq_id: null,
                         parent_id:null,
                         
                 

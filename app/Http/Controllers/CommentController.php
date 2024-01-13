@@ -39,18 +39,22 @@ class CommentController extends Controller
     {
         $validatedData = $request->validate([
             'reply' => 'required',
-            'faq_id' => 'required|exists:faq,id',
+            'faq_id' => 'sometimes|exists:faq,id|nullable',
+            'post_id' => 'sometimes|exists:post,id|nullable'
         ]);
     
         // Create a new comment instance
         $comment = new Comment();
         $comment->text = $validatedData['reply'];
-        $comment->faq_id = $validatedData['faq_id'];
-        $comment->post_id = null;
+        $comment->faq_id = $validatedData['faq_id'] ?? null;
+        $comment->post_id = $validatedData['post_id'] ?? null;
         $comment->parent_id = null;
         $comment->created_at = now();
         $comment->user_id = Auth::id();
         $comment->save();
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Category updated successfully']);
+        }
         return redirect()->back();
 
     }
