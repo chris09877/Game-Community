@@ -10789,7 +10789,6 @@ $(document).ready(function () {
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token
       },
-
       success: function success(response) {
         // show a succes message with a gif si y a moyens avec un timer 
         console.log('sisi reussi');
