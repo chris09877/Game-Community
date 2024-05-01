@@ -79,7 +79,8 @@ Auth::routes();
 Route::get('/contact', [App\Http\Controllers\ContactController::class,"index"])->name('contact');
 Route::post('/contact', [App\Http\Controllers\ContactController::class,"sendEmail"])->name('sendEmail');
 
-
+// Route for creating a like or removing a like
+Route::post('/like/{userId}/{postId}', [App\Http\Controllers\LikeController::class, 'create'])->name('like.create');
 
 //RESTRICTED ROUTES 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -94,6 +95,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('category.delete');
     Route::delete('/categories', [App\Http\Controllers\CategoryController::class, 'destroy2'])->name('category.delete2');
     // Route::delete('/categories/{id}', 'App\Http\Controllers\CategoryController@destroy')->name('category.delete');
+
 
 });
 
