@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+    public function __construct(){
+        $this->middleware("auth");
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,6 +41,15 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
+        if (!Auth::check()) {
+            return redirect('login')->with('error', 'You must be logged in to submit a comment.');
+        }
+
+        elseif (!$user->exists()) {
+            return redirect('register')->with('error', 'Logged in user do not exist');
+
+        };
         $validatedData = $request->validate([
             'reply' => 'required',
             'faq_id' => 'sometimes|exists:faq,id|nullable',
@@ -100,16 +113,26 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        $comment = Comment::find($id);
+{
+    // Check if the user is authenticated
+    if (!Auth::check()) {
+        return redirect('login')->with('error', 'You must be logged in to delete a comment.');
+    }
+
+    $comment = Comment::find($id);
 
     if (!$comment) {
-        
         return redirect()->back()->with('error', 'Comment not found');
+    }
+
+    // Check if the user is the owner of the comment or an admin
+    $user = Auth::user();
+    if ($comment->user_id !== $user->id && !$user->admin) {
+        return redirect()->back()->with('error', 'You do not have permission to delete this comment');
     }
 
     $comment->delete();
 
     return redirect()->back();
-    }
+}
 }
