@@ -12,6 +12,11 @@ use Illuminate\Validation\ValidationException;
 
 class FaqController extends Controller
 {
+
+    public function __construct()
+{
+    $this->middleware('auth'); 
+}
     
     /**
      * Display a listing of the resource.
@@ -36,9 +41,15 @@ class FaqController extends Controller
      */
     public function create()
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors('You must be logged in to create a category.');
 
+        }
+        if(!Auth::user()->admin){
+            return redirect()->route('login')->withErrors('You must be logged in to check a user profile.');
+
+        }
         $categories = Category::all();
-// dd($categories);
         return view('createFaq2', ['categories' => $categories]);
     }
 
@@ -52,7 +63,11 @@ class FaqController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->validate(['title']));
+    
+    if(!Auth::user()->admin){
+        return redirect()->route('login')->withErrors('You must be logged in to check a user profile.');
+
+    }
 
         try {
             $validatedData = $request->validate([
@@ -64,7 +79,6 @@ class FaqController extends Controller
             return redirect()->back()->withErrors($e->errors())->withInput();
         }
         
-        //dd($validatedData);
         $faq = Faq::create([
             'title' => $validatedData['title'],
             'text' => $validatedData['text'],
@@ -73,7 +87,6 @@ class FaqController extends Controller
             'created_at' => now(),
         ]);
         $faq->save();
-       // dd($faq);
         return redirect()->route('faq')->with("status", "FAQ question successfully created");
     }
 
@@ -110,6 +123,14 @@ class FaqController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors('You must be logged in to create a category.');
+
+        }
+        if(!Auth::user()->admin){
+        return redirect()->route('login')->withErrors('You must be logged in to check a user profile.');
+
+        }
         // Find the FAQ by ID
         $faq = Faq::findOrFail($id);
 
@@ -153,6 +174,14 @@ class FaqController extends Controller
      */
     public function destroy($id)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors('You must be logged in to create a category.');
+
+        }
+        if(!Auth::user()->admin){
+        return redirect()->route('login')->withErrors('You must be logged in to check a user profile.');
+
+        }
         $faq = Faq::findOrFail($id);
         $faq->delete();
         return redirect()->back()->with('success', 'FAQ deleted successfully');
