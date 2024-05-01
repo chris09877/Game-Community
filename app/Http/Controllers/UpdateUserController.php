@@ -77,11 +77,14 @@ class UpdateUser extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
-    {
-        $user = Auth::user();
-        $user->name = $request->input('Name');
-        //$user->save();
+{
+    $user = Auth::user();
+    if (!$user) {
+        return response()->json(['error' => 'User not authenticated'], 401);
     }
+    $user->name = $request->input('Name');
+    $user->save();
+}
 
     /**
      * Remove the specified resource from storage.
