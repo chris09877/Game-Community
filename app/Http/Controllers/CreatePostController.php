@@ -98,47 +98,18 @@ class CreatePostController extends Controller
     }
 
     public function update(Request $request, $id){
-    //     $post = Post::findOrFail($id);
-
-    //     $data = $request->validate([
-    //         'content' => 'sometimes|string',
-    //         'media' => 'sometimes|file|nullable',
-    //         'title' => 'sometimes|string|max:255',
-    //         'updated_at' => 'sometimes|date',
-    //     ]);
-
-    //     if ($request->hasFile('media')) {
-    //         $file = $request->file('media');
-    //         $filename = $id . '.' . $file->getClientOriginalExtension();
-    //         dd($file);
-    //         // Store the file in the public disk under the 'avatars' folder
-    //         $path = $file->storeAs('posts', $filename, 'public');
-    
-    //         // Update the user's profile picture in the database
-    //         $post->update([
-    //             'image' => $path,
-    //             'title' => $data['title'],
-    //             'updated_at' => $data['updated_at'],
-    //             'content' => $data['content'],
-     
-    //     ]);
-           
-    //     }
-
-    // // dd($id);
-    //     // Update the post with the new data
-    //     else {
-    //         $post->update([
-    //              'title' => $data['title'],
-    //              'updated_at' => $data['updated_at'],
-    //              'content' => $data['content'],
-     
-    //          ]);
-    //     }
         
-    //     $post->save();
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors('You must be logged in to upate a post.');
+
+        }
+        
     $post = Post::findOrFail($id);
-dd($post);
+   
+    if(!Auth::user()->admin && $post->user_id != Auth::user()->id){
+    return redirect()->route('login')->withErrors('You have no right to update this post.');
+
+    }
 $data = $request->validate([
     'content' => 'sometimes|string',
     'media' => 'sometimes|file|nullable',
@@ -149,7 +120,6 @@ $data = $request->validate([
 if ($request->hasFile('media')) {
     $file = $request->file('media');
     $filename = $id . '.' . $file->getClientOriginalExtension();
-dd("fhjj");
     // Store the file in the public disk under the 'posts' folder (adjust folder name if needed)
     $path = $file->storeAs('posts', $filename, 'public');
 
@@ -177,8 +147,18 @@ dd("fhjj");
 
     public function delete($id)
 {
-    // Retrieve the post by ID
+    if (!Auth::check()) {
+        return redirect()->route('login')->withErrors('You must be logged in to create a category.');
+
+    }
     $post = Post::find($id);
+
+
+if(!Auth::user()->admin && $post->user_id != Auth::user()->id){
+return redirect()->route('login')->withErrors('You must be logged in to check a user profile.');
+
+}
+    // Retrieve the post by ID
 
     // Check if the post exists
     if (!$post) {
