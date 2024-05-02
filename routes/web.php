@@ -80,7 +80,7 @@ Route::get('/contact', [App\Http\Controllers\ContactController::class,"index"])-
 Route::post('/contact', [App\Http\Controllers\ContactController::class,"sendEmail"])->name('sendEmail');
 
 // Route for creating a like or removing a like
-Route::post('/like/{userId}/{postId}', [App\Http\Controllers\LikeController::class, 'create'])->name('like.create');
+Route::post('/like', [App\Http\Controllers\LikeController::class, 'create'])->name('like.create');
 
 //RESTRICTED ROUTES 
 Route::middleware(['auth', 'admin'])->group(function () {
