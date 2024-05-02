@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CommentController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware("auth");
     }
 
@@ -41,21 +42,13 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $user = auth()->user();
-        if (!Auth::check()) {
-            return redirect('login')->with('error', 'You must be logged in to submit a comment.');
-        }
-
-        elseif (!$user->exists()) {
-            return redirect('register')->with('error', 'Logged in user do not exist');
-
-        };
+       
         $validatedData = $request->validate([
             'reply' => 'required',
             'faq_id' => 'sometimes|exists:faq,id|nullable',
             'post_id' => 'sometimes|exists:post,id|nullable'
         ]);
-    
+
         // Create a new comment instance
         $comment = new Comment();
         $comment->text = $validatedData['reply'];
@@ -69,7 +62,6 @@ class CommentController extends Controller
             return response()->json(['success' => true, 'message' => 'Category updated successfully']);
         }
         return redirect()->back();
-
     }
 
     /**
@@ -113,26 +105,16 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-{
-    // Check if the user is authenticated
-    if (!Auth::check()) {
-        return redirect('login')->with('error', 'You must be logged in to delete a comment.');
+    {
+
+
+        try {
+            $comment = Comment::find($id);
+        } catch (ModelNotFoundException  $e) {
+            // Handle the error, for example, log it or return an error response
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+        $comment->delete();
+        return redirect()->back();
     }
-
-    $comment = Comment::find($id);
-
-    if (!$comment) {
-        return redirect()->back()->with('error', 'Comment not found');
-    }
-
-    // Check if the user is the owner of the comment or an admin
-    $user = Auth::user();
-    if ($comment->user_id !== $user->id && !$user->admin) {
-        return redirect()->back()->with('error', 'You do not have permission to delete this comment');
-    }
-
-    $comment->delete();
-
-    return redirect()->back();
-}
 }

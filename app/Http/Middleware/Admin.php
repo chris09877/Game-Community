@@ -4,12 +4,14 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class Admin
 {
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() && $request->user()->admin) {
+        if (Auth::check() && Auth::user()->admin) {
             return $next($request);
         }
 
