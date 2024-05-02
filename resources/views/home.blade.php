@@ -40,11 +40,17 @@
                             <p>{{ $post->content }}</p>
                             <p>{{ $post->created_at }}</p>
                         </div>
+                        <button id="like-btn-{{ $post->id }}"
+                            class="like-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center {{ $user->likedPosts->contains($post->id) ? 'bg-red-500 text-white' : '' }}">
+                            <img src="/path/to/heart.gif" alt="Like" class="fill-current w-4 h-4 mr-2">
+                            <span>Like</span>
+                        </button>
                     </div>
                 </a>
                 <div class="flex items-center mt-4">
                     <button onclick="toggleReplyInput(this)"
-                        class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border" id="toggleReplyInput_{{$post->id}}">Reply
+                        class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
+                        id="toggleReplyInput_{{$post->id}}">Reply
                     </button>
                     <div id="replyInput_{{$post->id}}" class=" ml-4" style="display: none;">
 
@@ -57,17 +63,17 @@
                 <div class="border-t mt-4 pt-4">
                     <h2 class="text-black font-bold py-2 px-4">Comments</h2>
                     @if($comments->where('post_id', $post->id)->isEmpty())
-                        <p>There are no answers yet to this question.</p>
+                    <p>There are no answers yet to this question.</p>
                     @else
-                        @foreach($comments as $comment)
-                            @if($comment->post_id === $post->id)
-                                <div class="border rounded p-2 mb-2">
-                                    <p>{{$comment->user->name}}</p>
-                                    <p>{{$comment->text}}</p>
-                                    <p>{{$comment->created_at}}</p>
-                                </div>
-                            @endif
-                        @endforeach
+                    @foreach($comments as $comment)
+                    @if($comment->post_id === $post->id)
+                    <div class="border rounded p-2 mb-2">
+                        <p>{{$comment->user->name}}</p>
+                        <p>{{$comment->text}}</p>
+                        <p>{{$comment->created_at}}</p>
+                    </div>
+                    @endif
+                    @endforeach
                     @endif
                 </div>
             </div>
@@ -82,6 +88,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script>
         // window.addEventListener('load', function() {
+        $(document).ready(function() {
         setTimeout(function() {
             document.getElementById('success-message').style.display = 'none';
         }, 2000); // 2000 milliseconds = 2 seconds
@@ -93,7 +100,7 @@
         button.innerText = button.innerText === "Reply" ? "Cancel" : "Reply";
         }
 
-    function sendReply(button) {
+     function sendReply(button) {
         let id = button.id;    
         let replyText = document.getElementById("replyText_" + id).value;
         if (replyText.trim() !== "") {
@@ -126,8 +133,39 @@
 
         }
         toggleReplyInput();
-    }
-    
-    
+        // Toggle like button click event
+    $('.like-btn').click(function() {
+        let button = $(this);
+        let postId = button.attr('id').split('-')[2]; // Assuming the button id is like-btn-postId
+        let isLiked = button.hasClass('bg-red-500');
+
+        // Toggle like status visually
+        button.toggleClass('bg-red-500 text-white bg-gray-200');
+        button.find('span').text(isLiked ? 'Like' : 'Liked');
+
+        // Send the toggle request to the server
+        $.ajax({
+            url: `/like/${postId}`,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                userId: "{{ auth()->user()->id }}",
+                postId: postId,
+                like: !isLiked
+            },
+            success: function(response) {
+                console.log(response.message); // Response handling
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+                button.toggleClass('bg-red-500 text-white bg-gray-200'); // Revert changes on error
+                button.find('span').text(isLiked ? 'Liked' : 'Like');
+            }
+        });
+    });
+     };
+    }); 
     // });
     </script>

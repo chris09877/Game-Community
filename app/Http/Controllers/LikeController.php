@@ -13,10 +13,12 @@ class LikeController extends Controller
         $this->middleware("auth");
     }
 
-    public function create(Request $request, $userId, $postId){
-        $user = auth()->user();
-    
-        if ($user->id != $userId) {
+    public function create(Request $request){
+        $userId = $request->userId;
+        $postId = $request->postId;
+        $user = User::find($userId);
+
+        if ($user->id != auth()->id()) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
         
@@ -24,7 +26,6 @@ class LikeController extends Controller
         
         if ($isLiked) {
             $this->delete($postId);
-            return response()->json(['message' => 'Like removed'], 200);
         } else {
             $user->likedPosts->attach($postId);
             return response()->json(['message' => 'Like added'], 201);
@@ -34,5 +35,7 @@ class LikeController extends Controller
     public function delete($postId){
         $user = auth()->user();
         $user->likedPosts->detach($postId);
+        return response()->json(['message' => 'Like removed'], 200);
+
     }
 }

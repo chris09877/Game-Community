@@ -30,6 +30,10 @@
         class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2 hidden">
         Delete
     </button>
+    <button id="like-btn-{{ $post->id }}" class="like-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center {{ $user->likedPosts->contains($post->id) ? 'bg-red-500 text-white' : '' }}">
+        <img src="/path/to/heart.gif" alt="Like" class="fill-current w-4 h-4 mr-2">
+        <span>Like</span>
+    </button>
     @endif
 </div>
 
@@ -162,5 +166,38 @@
                 }
             });
         });
+
+        // Toggle like button click event
+    $('.like-btn').click(function() {
+        let button = $(this);
+        let postId = button.attr('id').split('-')[2]; // Assuming the button id is like-btn-postId
+        let isLiked = button.hasClass('bg-red-500');
+
+        // Toggle like status visually
+        button.toggleClass('bg-red-500 text-white bg-gray-200');
+        button.find('span').text(isLiked ? 'Like' : 'Liked');
+
+        // Send the toggle request to the server
+        $.ajax({
+            url: `/like/${postId}`,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                userId: "{{ auth()->user()->id }}",
+                postId: postId,
+                like: !isLiked
+            },
+            success: function(response) {
+                console.log(response.message); // Response handling
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+                button.toggleClass('bg-red-500 text-white bg-gray-200'); // Revert changes on error
+                button.find('span').text(isLiked ? 'Liked' : 'Like');
+            }
+        });
+    });
     });
 </script>
