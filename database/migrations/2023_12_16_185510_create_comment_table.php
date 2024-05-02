@@ -23,7 +23,7 @@ class CreateCommentTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->nullable(false);
-            $table->foreign('post_id')->references('id')->on('posts')->nullable(true);
+            $table->foreign('post_id')->references('id')->on('post')->nullable(true);
             $table->foreign('faq_id')->references('id')->on('faq')->nullable(true);
             $table->foreign('parent_id')->references('id')->on('comment')->nullable(true);
         });

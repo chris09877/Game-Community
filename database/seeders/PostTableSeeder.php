@@ -18,7 +18,7 @@ class PostTableSeeder extends Seeder
         $users = \App\Models\User::pluck('id'); // Get all existing user IDs
         // foreach ($users as $userId) {
 
-        DB::table('posts')->insert([
+        DB::table('post')->insert([
             [
                 'user_id' => 1,
                 'image' => 'posts/post.jpg',
