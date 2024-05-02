@@ -16,9 +16,6 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             @foreach($allPosts as $post)
                 <div class="rounded-xl overflow-hidden hover:cursor-pointer px-2 py-1 flex flex-col gap-2">
-                    {{-- <div>
-                        <img src="{{ $post->{'images/videos'} }}" alt="Post Image" class="w-full h-60 object-cover">
-                    </div> --}}
                     <div class="rounded-b-xl border-2 border-t-0 p-4 flex flex-col gap-2">
                         <h2 class="text-2xl font-bold">{{ $post->title }}</h2>
                         <div>

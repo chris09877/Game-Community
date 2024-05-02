@@ -31,9 +31,13 @@
         Delete
     </button>
     @endif
-    <button id="like-btn-{{ $post->id }}" class="like-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center {{ $user->likedPosts->contains($post->id) ? 'bg-red-500 text-white' : '' }}">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4 mr-2 {{ $user->likedPosts->contains($post->id) ? 'text-white' : 'text-gray-500' }}" viewBox="0 0 24 24">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    <button id="like-btn-{{ $post->id }}"
+        class="like-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center {{ $user->likedPosts->contains($post->id) ? 'bg-red-500 text-white' : '' }}">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+            class="w-4 h-4 mr-2 {{ $user->likedPosts->contains($post->id) ? 'text-white' : 'text-gray-500' }}"
+            viewBox="0 0 24 24">
+            <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
         </svg>
         <span>Like</span>
     </button>
@@ -74,10 +78,6 @@
             $('#saveButton').show().focus();
             $('#cancelBtn').show().focus();
             $('#deleteButton2').show().focus();
-
-            // $('#title').show().focus()
-
-            console.log("wassup");
         });
 
         // Save button click event
@@ -93,7 +93,6 @@
             // Send the updated data to the server using AJAX
             $.post({
                 url:"{{ route('post.update', ['id' => $post->id]) }}",
-                //method: 'POST',
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
                 data: {
@@ -107,14 +106,11 @@
 
                     $('#title').show().hide();
                     $('#new-content').hide();
-                    // $('#title').hide()
-                    // $('img#media').attr('contenteditable', 'true');
                     $('h1').text(title).show();
                     $('p#old-content').text(content).show();
                     console.log(response);
                 },
                 error: function(xhr, status, error) {
-                    // Handle the error response
                     console.log(xhr.responseText);
                 }
             });
@@ -144,7 +140,6 @@
                     console.log(response);
                 },
                 error: function(xhr, status, error) {
-                    // Handle the error response
                     console.log(xhr.responseText);
                 }
             });
@@ -163,7 +158,6 @@
                     console.log(response);
                 },
                 error: function(xhr, status, error) {
-                    // Handle the error response
                     console.log(xhr.responseText);
                 }
             });
