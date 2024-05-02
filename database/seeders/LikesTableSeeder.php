@@ -16,13 +16,13 @@ class LikesTableSeeder extends Seeder
     {
         
         $users = User::all();
-        $postIds = Post::pluck('id')->toArray(); // Get all post IDs as an array
+        $postIds = Post::pluck('id')->toArray(); 
 
         foreach ($users as $user) {
-            $randomPostIds = array_rand($postIds, rand(1, 5)); // Select 1-5 posts randomly for each user
+            $randomPostIds = array_rand($postIds, rand(1, 5)); 
 
             foreach ($randomPostIds as $postId) {
-                $user->likedPosts()->attach($postId); // Attach each post to the user
+                $user->likedPosts()->attach($postId); 
             }
         }
 
