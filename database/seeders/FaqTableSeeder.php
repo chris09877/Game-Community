@@ -33,7 +33,6 @@ class FaqTableSeeder extends Seeder
                 'text' => 'Some feedback content for the second user.',
                 'category_id' => $updateCategoryId,
             ],
-            // Add more feedback entries as needed
         ]);
     }
 }

@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth");
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,12 +42,13 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+       
         $validatedData = $request->validate([
             'reply' => 'required',
             'faq_id' => 'sometimes|exists:faq,id|nullable',
             'post_id' => 'sometimes|exists:post,id|nullable'
         ]);
-    
+
         // Create a new comment instance
         $comment = new Comment();
         $comment->text = $validatedData['reply'];
@@ -56,7 +62,6 @@ class CommentController extends Controller
             return response()->json(['success' => true, 'message' => 'Category updated successfully']);
         }
         return redirect()->back();
-
     }
 
     /**
@@ -101,15 +106,15 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        $comment = Comment::find($id);
 
-    if (!$comment) {
-        
-        return redirect()->back()->with('error', 'Comment not found');
-    }
 
-    $comment->delete();
-
-    return redirect()->back();
+        try {
+            $comment = Comment::find($id);
+        } catch (ModelNotFoundException  $e) {
+            // Handle the error, for example, log it or return an error response
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+        $comment->delete();
+        return redirect()->back();
     }
 }

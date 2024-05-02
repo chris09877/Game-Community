@@ -15,9 +15,7 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = \App\Models\User::pluck('id'); // Get all existing user IDs
-        // foreach ($users as $userId) {
-
+        $users = \App\Models\User::pluck('id');
         DB::table('post')->insert([
             [
                 'user_id' => 1,
@@ -34,7 +32,6 @@ class PostTableSeeder extends Seeder
                 'created_at' => now(),
 
             ]
-            // Add more posts as needed
         ]);
     // }
     }

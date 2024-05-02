@@ -15,11 +15,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
+   
     /**
      * Show the application dashboard.
      *
@@ -34,6 +30,6 @@ class HomeController extends Controller
         $allPosts = Post::orderBy('created_at', 'desc')->get();
         $comments = Comment::whereNotNull('post_id')->get();
 
-        return view('home', ['userPosts' => $userPosts, 'allPosts' => $allPosts, 'comments'=>$comments]);
+        return view('home', ['user' => $user, 'userPosts' => $userPosts, 'allPosts' => $allPosts, 'comments'=>$comments]);
     }
 }

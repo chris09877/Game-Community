@@ -16,11 +16,9 @@
                 @foreach ($users as $user)
                 <tr class="border-t">
                     <td class="py-2 px-4">
-                        <a href="{{ route('profile.update', $user->id) }}" class="text-blue-500 hover:underline">{{ $user->name }}</a>
+                        <a href="{{ route('profile.update', $user->id) }}" class="text-blue-500 hover:underline">{{
+                            $user->name }}</a>
                     </td>
-                    {{-- <td>
-                        <button class="deleteBtn" data-id="{{ $category->id }}">Delete</button>
-                    </td> --}}
                 </tr>
                 @endforeach
             </tbody>
@@ -40,11 +38,9 @@
                 @foreach ($admins as $admin)
                 <tr class="border-t">
                     <td class="py-2 px-4">
-                        <a href="{{ route('profile.update', $admin->id) }}" class="text-blue-500 hover:underline">{{ $admin->name }}</a>
+                        <a href="{{ route('profile.update', $admin->id) }}" class="text-blue-500 hover:underline">{{
+                            $admin->name }}</a>
                     </td>
-                    {{-- <td>
-                        <button class="deleteBtn" data-id="{{ $category->id }}">Delete</button>
-                    </td> --}}
                 </tr>
                 @endforeach
             </tbody>

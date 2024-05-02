@@ -12,7 +12,8 @@ use Illuminate\Validation\ValidationException;
 
 class FaqController extends Controller
 {
-    
+
+
     /**
      * Display a listing of the resource.
      *
@@ -36,13 +37,11 @@ class FaqController extends Controller
      */
     public function create()
     {
-
         $categories = Category::all();
-// dd($categories);
         return view('createFaq2', ['categories' => $categories]);
     }
 
-   
+
 
     /**
      * Store a newly created resource in storage.
@@ -52,8 +51,6 @@ class FaqController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->validate(['title']));
-
         try {
             $validatedData = $request->validate([
                 'title' => 'required|string',
@@ -63,8 +60,7 @@ class FaqController extends Controller
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         }
-        
-        //dd($validatedData);
+
         $faq = Faq::create([
             'title' => $validatedData['title'],
             'text' => $validatedData['text'],
@@ -73,7 +69,6 @@ class FaqController extends Controller
             'created_at' => now(),
         ]);
         $faq->save();
-       // dd($faq);
         return redirect()->route('faq')->with("status", "FAQ question successfully created");
     }
 
@@ -85,7 +80,11 @@ class FaqController extends Controller
      */
     public function show($id)
     {
-        $faq = Faq::findOrFail($id);
+        try {
+            $faq = Faq::findOrFail($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('faq.index')->with('error', 'FAQ not found');
+        }
         $categories = Category::all();
         return view('faqUpdate', ['categories' => $categories, 'faq' => $faq]);
     }
@@ -111,8 +110,11 @@ class FaqController extends Controller
     public function update(Request $request, $id)
     {
         // Find the FAQ by ID
-        $faq = Faq::findOrFail($id);
-
+        try {
+            $faq = Faq::findOrFail($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('faq.index')->with('error', 'FAQ not found');
+        }
         $validatedData = $request->validate([
             'title' => 'required|string',
             'text' => 'required|string',
@@ -121,8 +123,7 @@ class FaqController extends Controller
 
         $categoryId = intval($validatedData['categories']);
         //checking if string = existing category name 
-        $category = Category::where('id', $categoryId);//->first();
-        //dd($category);  
+        $category = Category::where('id', $categoryId); //->first();
         if ($category !== null) {
             $faq->update([
                 'title' => $validatedData['title'],
@@ -131,18 +132,10 @@ class FaqController extends Controller
                 'updated_at' => now(),
 
             ]);
-           // dd($categoryId, $faq);
             return redirect()->route('faq.show', $faq->id)->with('success', 'FAQ updated successfully');
         } else {
             return redirect()->route('faq.show', $faq->id)->with('error', 'FAQ not updated');
         }
-
-
-
-
-
-
-        // Redirect back or to a specific route after successful update
     }
 
     /**
@@ -153,7 +146,11 @@ class FaqController extends Controller
      */
     public function destroy($id)
     {
-        $faq = Faq::findOrFail($id);
+        try {
+            $faq = Faq::findOrFail($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('faq.index')->with('error', 'FAQ not found');
+        }
         $faq->delete();
         return redirect()->back()->with('success', 'FAQ deleted successfully');
     }

@@ -1,16 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 
 class UpdateUser extends Controller
 {
-  
-    public function __construct(){
-        $this->middleware("auth");
-    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -20,10 +19,10 @@ class UpdateUser extends Controller
 
     {
         $user = Auth::user();
-        if(!$user){
+        if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
-        return view('updateUser',['user'=>$user]);
+        return view('updateUser', ['user' => $user]);
     }
 
     /**
@@ -79,8 +78,11 @@ class UpdateUser extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
         $user->name = $request->input('Name');
-        //$user->save();
+        $user->save();
     }
 
     /**

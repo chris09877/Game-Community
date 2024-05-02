@@ -9,11 +9,6 @@ class CategoryController extends Controller
 {
 
 
-    public function __construct (){
-        $this->middleware('auth');
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view("categories",['categories' => $categories]);
+        return view("categories", ['categories' => $categories]);
     }
 
     /**
@@ -44,20 +39,20 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         // Validate the form data
-    $validatedData = $request->validate([
-        'categoryName' => 'required|string|max:255',
-    ]);
+        $validatedData = $request->validate([
+            'categoryName' => 'required|string|max:255',
+        ]);
 
-    // Create a new category instance
-    $category = new Category();
-    $category->name = $validatedData['categoryName'];
-    // Set any other properties of the category as needed
+        // Create a new category instance
+        $category = new Category();
+        $category->name = $validatedData['categoryName'];
+        // Set any other properties of the category as needed
 
-    // Save the category to the database
-    $category->save();
+        // Save the category to the database
+        $category->save();
 
-    // Redirect to the index page or any other page as desired
-    return redirect()->route('category');
+        // Redirect to the index page or any other page as desired
+        return redirect()->route('category');
     }
 
     /**
@@ -91,17 +86,23 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-
+        try {
+            $category = Category::find($id);
+            if (!$category) {
+                throw new \Exception("Category not found");
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 404);
+        }
         // Validate the form data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
         ]);
-    
+
         // Update the category's name
         $category->name = $validatedData['name'];
         // Update any other properties of the category as needed
-    
+
         // Save the updated category to the database
         $category->save();
         if ($request->ajax()) {
@@ -117,24 +118,22 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
 
     public function destroy(Request $request, $id)
-{
-    $category = Category::find($id);
+    {
+        $category = Category::find($id);
 
-    if (!$category) {
-        return response()->json(['success' => false, 'message' => 'Category not found'], 404);
+        if (!$category) {
+            return response()->json(['success' => false, 'message' => 'Category not found'], 404);
+        }
+
+        $category->delete();
+
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Category deleted successfully']);
+        }
+
+        return redirect()->route('category')->with('success', 'Category deleted successfully');
     }
-
-    $category->delete();
-
-    if ($request->ajax()) {
-        return response()->json(['success' => true, 'message' => 'Category deleted successfully']);
-    }
-
-    return redirect()->route('category')->with('success', 'Category deleted successfully');
-}
-
-    
 }

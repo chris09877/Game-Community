@@ -1,16 +1,16 @@
- @extends('layouts.app')
- @section('title', 'Profile')
+@extends('layouts.app')
+@section('title', 'Profile')
 @section('content')
 <div class="container mx-auto flex justify-between items-start">
     <div class="button-profile ml-auto mb-8" style="float: right;">
         <button onclick="window.location='{{route('profile.update', $user->id)}}'"
-                class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Update Info
+            class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border">Update Info
         </button>
     </div>
 
     <div class="profile-info mt-20 flex flex-col items-start mr-auto">
         <!-- Profile photo here -->
-       
+
         <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="Profile Picture">
 
         <div>
@@ -43,24 +43,24 @@
     <!-- Display user posts here -->
     @foreach($userPosts as $post)
     <a href="{{ route('post.show', ['id' => $post->id]) }}">
-    <div class="post border rounded p-4 mb-4">
-        <h3 class="text-xl mb-2">{{$post->Title}}</h3>
-        @if($post->image != null)
-        <div class="media-post mb-2">
-            <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image">
+        <div class="post border rounded p-4 mb-4">
+            <h3 class="text-xl mb-2">{{$post->Title}}</h3>
+            @if($post->image != null)
+            <div class="media-post mb-2">
+                <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image">
+            </div>
+            <p class="text-gray-700 mb-2">{{$post->content}}</p>
+            <span class="text-gray-500">
+                <p>{{$post->created_at}}</p>
+            </span>
+            @else
+            <p class="text-gray-700 mb-2">{{$post->content}}</p>
+            <span class="text-gray-500">
+                <p>{{$post->created_at}}</p>
+            </span>
+            @endif
         </div>
-        <p class="text-gray-700 mb-2">{{$post->content}}</p>
-        <span class="text-gray-500">
-            <p>{{$post->created_at}}</p>
-        </span>
-        @else
-        <p class="text-gray-700 mb-2">{{$post->content}}</p>
-        <span class="text-gray-500">
-            <p>{{$post->created_at}}</p>
-        </span>
-        @endif
-    </div>
-</a>
+    </a>
     @endforeach
     @else
     <h3 class="text-2xl">Nothing posted yet</h3>
@@ -69,4 +69,3 @@
 
 
 @endsection
-

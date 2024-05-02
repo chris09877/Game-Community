@@ -5,14 +5,14 @@
 <div class="container mx-auto py-8 relative">
     <table id="categoryTable" class="max-w-md mx-auto  p-6 rounded-md shadow-md">
         <thead class="mb-8">
-            <tr >
-                <th >Categories Name</th>
+            <tr>
+                <th>Categories Name</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach ($categories as $category)
-            <tr id="row_{{ $category->id }}" style="cursor: pointer;"  >
+            <tr id="row_{{ $category->id }}" style="cursor: pointer;">
                 <td>
                     <span class="category-name">{{ $category->name }}</span>
                     <input type="text" class="editCategoryInput" style="display:none;">
@@ -26,22 +26,20 @@
                 <td class="action">
                     <button
                         class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border  delete-btn"
-                        data-id="{{ $category->id }}" >Delete</button>
+                        data-id="{{ $category->id }}">Delete</button>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
     <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border mt-2 mr-8"
-    onclick="window.location='{{ route('faq') }}'">Cancel</button>
+        onclick="window.location='{{ route('faq') }}'">Cancel</button>
     <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
-    id="addCategoryButton" >
-    Add Category
-</button>
+        id="addCategoryButton">
+        Add Category
+    </button>
 </div>
-{{-- <button class="float-left bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border"
-    onclick="window.location='{{ route('faq') }}'">Cancel</button> --}}
-<!-- Add Category Modal -->
+
 <div id="addCategoryModal" title="Add Category" class="mt-6">
     <form id="category-form" method="POST">
         @csrf
@@ -53,7 +51,7 @@
 
         </div>
 
-       
+
     </form>
 </div>
 @endsection
@@ -86,7 +84,6 @@
             },
             
             error: function(xhr, status, error) {
-                    // Handle the error response
                     console.log(xhr.responseText);
                     console.log(ajax.url);
                 }
@@ -122,7 +119,7 @@
         console.log("au dessus ajax");
         $.ajax({
             
-            url: "http://localhost:8000/categories/" + id,//url: "{{ route('category.update',['id' => " + id + "]) }}",
+            url: "http://localhost:8000/categories/" + id,
             type: 'Patch',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Include CSRF token
@@ -137,7 +134,6 @@
                 }
             },
             error: function(xhr, status, error) {
-                    // Handle the error response
                     console.log(xhr.responseText);
                 }
         });

@@ -8,7 +8,8 @@
 
     <div class="mb-6">
         <h2 class="text-xl font-bold">Chat-GPT:</h2>
-        <a href="https://chat.openai.com" class="text-white-500 hover:underline" target="_blank" rel="noopener noreferrer">
+        <a href="https://chat.openai.com" class="text-white-500 hover:underline" target="_blank"
+            rel="noopener noreferrer">
             https://chat.openai.com
         </a>
     </div>
