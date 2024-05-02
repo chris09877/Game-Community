@@ -9,19 +9,16 @@ use Illuminate\Support\Facades\Auth;
 class LikeController extends Controller
 {
     
-    public function __construct(){
-        $this->middleware("auth");
-    }
+   
 
     public function create(Request $request){
         $userId = $request->userId;
         $postId = $request->postId;
-        $user = User::find($userId);
-
-        if ($user->id != auth()->id()) {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
-        
+        try {
+            $user = User::findOrFail($userId);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['message' => 'User not found'], 404);
+        }        
         $isLiked = $user->likedPosts()->where('post_id', $postId)->exists();
         
         if ($isLiked) {

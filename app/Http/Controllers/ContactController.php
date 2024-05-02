@@ -63,16 +63,7 @@ class ContactController extends Controller
     public function store(Request $request)
     {
 
-        // $data = $request->validate([
-        //     'name' => 'required',
-        //     'email' => 'required|email',
-        //     'message' => 'required',
-        // ]);
-
-        // Mail::to('your_email@gmail.com')->send(new ContactFormMail($data));
-
-        // return redirect('/contact')->with('message', 'Thanks for your message. We\'ll be in touch.');
-   // }
+    //
     }
 
     /**
