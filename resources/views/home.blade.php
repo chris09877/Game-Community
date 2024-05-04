@@ -91,7 +91,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script>
-    $(document).ready(function() {
+   
         setTimeout(function() {
             document.getElementById('success-message').style.display = 'none';
         }, 2000); // 2000 milliseconds = 2 seconds
@@ -133,6 +133,7 @@
         toggleReplyInput();
       
      };
+     $(document).ready(function() {
        // Toggle like button click event
     $('.like-btn').click(function() {
         let button = $(this);

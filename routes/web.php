@@ -78,11 +78,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post("/categories", [App\Http\Controllers\CategoryController::class, "store"])->name('category.store');
     Route::patch('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
     Route::delete('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('category.delete');
-    Route::delete('/categories', [App\Http\Controllers\CategoryController::class, 'destroy2'])->name('category.delete2');
 
     // ROUTES FAQ
     Route::delete('/faq/{id}', [App\Http\Controllers\FaqController::class, "destroy"])->name('faq.destroy');
-    Route::post("/create/faq", [App\Http\Controllers\FaqController::class, "store"])->name('submitFaq');
 });
 
 //RESTRICTED ROUTES only accessible for authenticated users
@@ -96,10 +94,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/profile/update/{id}", [App\Http\Controllers\ProfileController::class, "show"])->name('profile.update');
 
     //ROUTE POST
+    Route::get("/post/create", 'App\Http\Controllers\CreatePostController@index')->name('post.create');
     Route::get("/post/create", [App\Http\Controllers\CreatePostController::class, "index"])->name('post.create');
-    Route::post("/post/create", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
+
+   // Route::post("/post/create", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
 
     // ROUTES FAQ
     Route::get('/create/faq', 'App\Http\Controllers\FaqController@create')->name('faq.create');
+    Route::post("/create/faq", [App\Http\Controllers\FaqController::class, "store"])->name('submitFaq');
+
 
 });
