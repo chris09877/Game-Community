@@ -16,12 +16,4 @@ class Category extends Model
     return $this->hasMany(Faq::class);
 }
 
-public static function getAllCategories()
-    {
-        return self::all();
-    }
-
-    public function getFeedbacks()
-    {
-        return $this->feedbacks;
-    }}
+}

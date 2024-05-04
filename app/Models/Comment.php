@@ -19,29 +19,13 @@ class Comment extends Model
         'updated_at'
     ];
 
-    public function parentComment()
-    {
-        return $this->belongsTo(Comment::class, 'parent_id');
-    }
-
+  
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+  
 
-    public function post()
-    {
-        return $this->belongsTo(Post::class, 'post_id');
-    }
-
-    public function faq()
-    {
-        return $this->belongsTo(Faq::class, 'faq_id');
-    }
-
-    public function childComments()
-    {
-        return $this->hasMany(Comment::class, 'parent_id');
-    }
+  
     
 }

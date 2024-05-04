@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Log;
 
 class CreatePostController extends Controller
 {
@@ -32,7 +33,7 @@ class CreatePostController extends Controller
         $date = now();
 
         if ($request->hasFile('media')) {
-          
+
             $post =  Post::create([
                 'title' => $data['title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
                 'content' => $data['content'],
@@ -61,15 +62,36 @@ class CreatePostController extends Controller
             ]);
         }
 
-        
+
         return redirect('dashboard')->with('success', 'Post created successfully');
     }
 
     public function show($id)
     {
-        $post = Post::findOrFail($id);
+        try {
+            $post = Post::findOrFail($id);
+            $user = Auth::user();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Handle the case where the post is not found
+            return redirect()->back()->with('error', 'Post not found');
+        } catch (\Exception $e) {
+            // Handle other possible exceptions
+            return redirect()->back()->with('error', 'An error occurred');
+        }
         $user = Auth::user();
+
+        try {
+            $post = Post::findOrFail($id);
+            $user = Auth::user();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Log::error("Post not found: " . $e->getMessage());
+            return redirect()->back()->with('error', 'Post not found');
+        } catch (\Exception $e) {
+            Log::error("An error occurred: " . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred');
+        }
         $comments = Comment::where('post_id', $post->id)->get();
+        return view('post', ['post' => $post, 'user' => $user, 'comments' => $comments]);
         return view('post', ['post' => $post, 'user' => $user, 'comments' => $comments]);
     }
 
@@ -115,7 +137,7 @@ class CreatePostController extends Controller
 
     public function delete($id)
     {
-        
+
         try {
             $post = Post::findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
