@@ -76,14 +76,10 @@ class CreatePostController extends Controller
     public function update(Request $request, $id)
     {
 
-        if (!Auth::check()) {
-            return redirect()->route('login')->withErrors('You must be logged in to upate a post.');
-        }
-
-        $post = Post::findOrFail($id);
-
-        if (!Auth::user()->admin && $post->user_id != Auth::user()->id) {
-            return redirect()->route('login')->withErrors('You have no right to update this post.');
+        try {
+            $post = Post::findOrFail($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Post not found');
         }
         $data = $request->validate([
             'content' => 'sometimes|string',
@@ -119,21 +115,14 @@ class CreatePostController extends Controller
 
     public function delete($id)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->withErrors('You must be logged in to create a category.');
-        }
-        $post = Post::find($id);
-
-
-        if (!Auth::user()->admin && $post->user_id != Auth::user()->id) {
-            return redirect()->route('login')->withErrors('You must be logged in to check a user profile.');
-        }
-        // Retrieve the post by ID
-
-        // Check if the post exists
-        if (!$post) {
+        
+        try {
+            $post = Post::findOrFail($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return redirect()->back()->with('error', 'Post not found');
         }
+
+
 
         // Delete the post
         $post->delete();
