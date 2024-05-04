@@ -15,7 +15,7 @@ class Admin
             return $next($request);
         }
 
-        return redirect('/home'); // Redirect unauthorized users to another page (change this as needed)
+        return route('/login'); // Redirect unauthorized users to another page (change this as needed)
     }
 }
 ?>
