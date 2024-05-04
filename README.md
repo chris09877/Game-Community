@@ -59,3 +59,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# My Community Game App
+
+Welcome to my awesome Community Game App repository! Check it out [here](https://github.com/chris09877/communityGame-app).
