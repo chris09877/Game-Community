@@ -18,7 +18,8 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermissionTo('post.create'); // Adjust as needed
+
     }
 
     /**
@@ -30,7 +31,8 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        //
+        return $user->id === $post->user_id || $user->hasPermissionTo('post.create');
+
     }
 
     /**
@@ -41,7 +43,8 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasPermissionTo('post.create'); // Adjust as needed
+
     }
 
     /**

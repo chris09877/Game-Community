@@ -40,8 +40,9 @@ Route::get('/latest-posts', [LatestNewsController::class, 'index'])->name('lates
 
 //ROUTE POST
 Route::get("/post/{id}", [App\Http\Controllers\CreatePostController::class, "show"])->name('post.show');
-Route::post("/post/{id}", [App\Http\Controllers\CreatePostController::class, "update"])->name('post.update')->middleware('can:update,post');
-Route::delete("/post/{id}", [App\Http\Controllers\CreatePostController::class, "delete"])->name('post.destroy')->middleware('can:destroy,post');
+Route::post("/post/{id}", [App\Http\Controllers\CreatePostController::class, "update"])->name('post.update');//->middleware('can:update,post');
+Route::delete("/post/{id}", [App\Http\Controllers\CreatePostController::class, "delete"])->name('post.destroy');//->middleware('can:destroy,post');
+
 
 
 //ROUTE PROFILE
@@ -94,10 +95,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/profile/update/{id}", [App\Http\Controllers\ProfileController::class, "show"])->name('profile.update');
 
     //ROUTE POST
-    Route::get("/post/create", 'App\Http\Controllers\CreatePostController@index')->name('post.create');
+    // Route::get("/post/create", 'App\Http\Controllers\CreatePostController@index')->name('post.create');
     Route::get("/post/create", [App\Http\Controllers\CreatePostController::class, "index"])->name('post.create');
 
-   // Route::post("/post/create", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
+   Route::post("/post/create", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
 
     // ROUTES FAQ
     Route::get('/create/faq', 'App\Http\Controllers\FaqController@create')->name('faq.create');

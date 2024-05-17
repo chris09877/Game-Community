@@ -16,6 +16,7 @@ class CreatePostController extends Controller
 
     public function index()
     {
+        dd("ggggg");
         return view("createPost");
     }
 
