@@ -95,12 +95,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/profile/update/{id}", [App\Http\Controllers\ProfileController::class, "show"])->name('profile.update');
 
     //ROUTE POST
-    // Route::get("/post/create", 'App\Http\Controllers\CreatePostController@index')->name('post.create');
     Route::get('/create/post', [App\Http\Controllers\CreatePostController::class, 'index'])->name('post.create');
-
-    // Route::get("/post/create", [App\Http\Controllers\CreatePostController::class, "index"])->name('post.create');
-
-   Route::post("/post/create", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
+   Route::post("/create/post", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
 
     // ROUTES FAQ
     Route::get('/create/faq', 'App\Http\Controllers\FaqController@create')->name('faq.create');
