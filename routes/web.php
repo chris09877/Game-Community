@@ -96,7 +96,9 @@ Route::middleware(['auth'])->group(function () {
 
     //ROUTE POST
     // Route::get("/post/create", 'App\Http\Controllers\CreatePostController@index')->name('post.create');
-    Route::get("/post/create", [App\Http\Controllers\CreatePostController::class, "index"])->name('post.create');
+    Route::get('/create/post', [App\Http\Controllers\CreatePostController::class, 'index'])->name('post.create');
+
+    // Route::get("/post/create", [App\Http\Controllers\CreatePostController::class, "index"])->name('post.create');
 
    Route::post("/post/create", [App\Http\Controllers\CreatePostController::class, "store"])->name('submitPost');
 

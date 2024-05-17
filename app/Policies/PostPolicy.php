@@ -18,6 +18,7 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
+        
         return $user->hasPermissionTo('post.create'); // Adjust as needed
 
     }
