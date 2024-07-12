@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', '{{$user->name}}')
+@section('title', 'profile update')
 @section('content')
 <div class="flex justify-center items-center h-screen">
     <div class="text-center">

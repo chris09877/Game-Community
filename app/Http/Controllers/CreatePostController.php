@@ -26,8 +26,7 @@ class CreatePostController extends Controller
         $data = $request->validate([
             'title' => 'sometimes|string|max:255',
             'content' => 'sometimes|string',
-            'media' => 'sometimes|file', // problem c'est que le field peut prendre images & videos mais y a pas ca soit cest vidéo soit images tema chat avec gpt
-            // 'user2' => 'sometimes|int|max:11',
+            'media' => 'sometimes|file', 
         ]);
         $user = auth()->user();
         $userId = $user->id;
@@ -38,8 +37,8 @@ class CreatePostController extends Controller
             $post =  Post::create([
                 'title' => $data['title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
                 'content' => $data['content'],
-                'image' => null, //$path,//data['media'],
-                'user_id' => $userId, //8,//$data['user_id'],//(int)Auth::id(),
+                'image' => null,
+                'user_id' => $userId,
                 'created_at' => $date,
 
             ]);
@@ -52,12 +51,11 @@ class CreatePostController extends Controller
             $post->update(['image' => $path]);
             $post->save();
         } else {
-            //$mediaPath = null; // Set default value if no file is uploaded
             $post =  Post::create([
                 'title' => $data['title'], //a gauche c'est le nom dans le db a roite c'est le nom dans name in HTML
                 'content' => $data['content'],
                 'image' => null,
-                'user_id' => $userId, //8,//$data['user_id'],//(int)Auth::id(),
+                'user_id' => $userId, 
                 'created_at' => $date,
 
             ]);
@@ -69,17 +67,6 @@ class CreatePostController extends Controller
 
     public function show($id)
     {
-        try {
-            $post = Post::findOrFail($id);
-            $user = Auth::user();
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            // Handle the case where the post is not found
-            return redirect()->back()->with('error', 'Post not found');
-        } catch (\Exception $e) {
-            // Handle other possible exceptions
-            return redirect()->back()->with('error', 'An error occurred');
-        }
-        $user = Auth::user();
 
         try {
             $post = Post::findOrFail($id);
@@ -92,7 +79,6 @@ class CreatePostController extends Controller
             return redirect()->back()->with('error', 'An error occurred');
         }
         $comments = Comment::where('post_id', $post->id)->get();
-        return view('post', ['post' => $post, 'user' => $user, 'comments' => $comments]);
         return view('post', ['post' => $post, 'user' => $user, 'comments' => $comments]);
     }
 

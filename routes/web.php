@@ -40,13 +40,13 @@ Route::get('/latest-posts', [LatestNewsController::class, 'index'])->name('lates
 
 //ROUTE POST
 Route::get("/post/{id}", [App\Http\Controllers\CreatePostController::class, "show"])->name('post.show');
-Route::post("/post/{id}", [App\Http\Controllers\CreatePostController::class, "update"])->name('post.update');//->middleware('can:update,post');
-Route::delete("/post/{id}", [App\Http\Controllers\CreatePostController::class, "delete"])->name('post.destroy');//->middleware('can:destroy,post');
+Route::post("/post/{id}", [App\Http\Controllers\CreatePostController::class, "update"])->name('post.update');
+Route::delete("/post/{id}", [App\Http\Controllers\CreatePostController::class, "delete"])->name('post.destroy');
 
 
 
 //ROUTE PROFILE
-Route::post("/profile/update", [App\Http\Controllers\ProfileController::class, "update"])->name('submitUser')->middleware('can:update,user');
+Route::post("/profile/update", [App\Http\Controllers\ProfileController::class, "update"])->name('submitUser');
 
 //ROUTE HOME
 Route::get("/dashboard", [App\Http\Controllers\HomeController::class, "index"])->name('home');
@@ -58,7 +58,7 @@ Route::get('/faq/{id}', [App\Http\Controllers\FaqController::class, "show"])->na
 
 
 //ROUTES COMMENTS
-Route::delete('/comments/{id}', [App\Http\Controllers\CommentController::class, 'destroy'])->name('comment.destroy')->middleware('can:destroy,comment');
+Route::delete('/comments/{id}', [App\Http\Controllers\CommentController::class, 'destroy'])->name('comment.destroy');//->middleware('can:destroy,comment');
 
 
 Auth::routes();

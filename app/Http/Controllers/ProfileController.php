@@ -17,7 +17,7 @@ class ProfileController extends Controller
         }
 
         $userPosts = $user->posts()->get();
-        return view("profile",  ['user' => $user, 'userPosts' => $userPosts]); //la retunr le view avec du user data tsb
+        return view("profile",  ['user' => $user, 'userPosts' => $userPosts]); 
     }
 
     public function show($id)

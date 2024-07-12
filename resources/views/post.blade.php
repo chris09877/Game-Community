@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', '{{ $post->Title }}')
+@section('title', $post->title)
 @section('content')
 @if($user->id == $post->user_id || $user->admin)
 <button id="updateButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-end">
