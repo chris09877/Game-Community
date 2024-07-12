@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', '{{$faq->title}}')
+@section('title', $faq->title)
 @section('content')
 <div class="flex justify-center items-center h-screen" style="display: flex; justify-content:center; ">
     <div class="max-w-md w-full px-6">

@@ -81,7 +81,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('category.delete');
 
     // ROUTES FAQ
+    Route::get("/update/faq", [App\Http\Controllers\FaqController::class, "show"])->name('faqUpdate');
     Route::delete('/faq/{id}', [App\Http\Controllers\FaqController::class, "destroy"])->name('faq.destroy');
+    Route::post("/update/faq/{id}", [\App\Http\Controllers\FaqController::class, "update"])->name('faq.update');
 });
 
 //RESTRICTED ROUTES only accessible for authenticated users
