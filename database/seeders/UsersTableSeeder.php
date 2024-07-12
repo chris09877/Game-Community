@@ -25,6 +25,7 @@ class UsersTableSeeder extends Seeder
                 'Bio' => 'Some bio information about John Doe',
                 'admin' => true, 
                 'avatar' => 'profiles/1.jpg',
+                'birthday' => '1990-05-15',
             ],
             [
                 'name' => 'Jane Smith',
@@ -33,6 +34,8 @@ class UsersTableSeeder extends Seeder
                 'Bio' => 'Some bio information about Jane Smith',
                 'admin' => false, 
                 'avatar' => 'profiles/2.jpg',
+                'birthday' => '1990-06-15',
+
 
             ],
             [
@@ -42,6 +45,8 @@ class UsersTableSeeder extends Seeder
                 'Bio' => 'Some bio information about admin',
                 'admin' => true, 
                 'avatar' => 'profiles/3.jpg',
+                'birthday' => '1990-09-15',
+
 
             ],
         

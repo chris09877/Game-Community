@@ -15,7 +15,9 @@
 
         <div>
             <h2 class="text-3xl font-bold mb-2">{{$user->name}}</h2>
-            <p class="text-gray-600">{{$user->Bio}}</p>
+            <p class="text-gray-600 m-0 p-4">{{$user->Bio}}</p>
+            <p class="text-gray-600 m-0 p-4">{{$user->birthday}}</p>
+
         </div>
     </div>
 

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string("Bio")->nullable(true);
+            $table->timestamp('birthday')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->boolean('admin')->default(false);
