@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Storage;
 class CreatePostController extends Controller
 {
 
@@ -44,7 +44,8 @@ class CreatePostController extends Controller
             ]);
 
             $file = $request->file('media');
-            $filename = $post->id . '.' . $file->getClientOriginalExtension();
+           // $filename = $post->id . '.' . $file->getClientOriginalExtension();
+           $filename = $post->id . '_' . time() . '.' . $file->getClientOriginalExtension(); // Unique filename
 
             // Store the file in the public disk under the 'avatars' folder
             $path = $file->storeAs('posts', $filename, 'public');
@@ -82,45 +83,54 @@ class CreatePostController extends Controller
         return view('post', ['post' => $post, 'user' => $user, 'comments' => $comments]);
     }
 
-    public function update(Request $request, $id)
-    {
+ 
 
-        try {
-            $post = Post::findOrFail($id);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return redirect()->back()->with('error', 'Post not found');
-        }
-        $data = $request->validate([
-            'content' => 'sometimes|string',
-            'media' => 'sometimes|file|nullable',
-            'title' => 'sometimes|string|max:255',
-            'updated_at' => 'sometimes|date',
-        ]);
 
-        if ($request->hasFile('media')) {
-            $file = $request->file('media');
-            $filename = $id . '.' . $file->getClientOriginalExtension();
-            // Store the file in the public disk under the 'posts' folder (adjust folder name if needed)
-            $path = $file->storeAs('posts', $filename, 'public');
-
-            // Update the post with the new data and media file path
-            $post->update([
-                'image' => $path,
-                'title' => $data['title'],
-                'updated_at' => $data['updated_at'],
-                'content' => $data['content'],
-            ]);
-        } else {
-            // Update the post with the new data, excluding media file path
-            $post->update([
-                'title' => $data['title'],
-                'updated_at' => $data['updated_at'],
-                'content' => $data['content'],
-            ]);
-        }
-
-        return redirect()->back()->with('success', 'Post created successfully');
+public function update(Request $request, $id)
+{
+    try {
+        $post = Post::findOrFail($id);
+    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        return redirect()->back()->with('error', 'Post not found');
     }
+
+    $data = $request->validate([
+        'content' => 'sometimes|string',
+        'media' => 'sometimes|file|nullable',
+        'title' => 'sometimes|string|max:255',
+        'updated_at' => 'sometimes|date',
+    ]);
+
+    if ($request->hasFile('media')) {
+        if ($post->image) {
+            try {
+                if (Storage::disk('public')->exists($post->image)) {
+                    Storage::disk('public')->delete($post->image);
+                }
+            } catch (\Exception $e) {
+                Log::error('Error deleting file: ' . $e->getMessage());
+            }
+        }
+
+        $file = $request->file('media');
+        $filename = $post->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs('posts', $filename, 'public');
+
+        Log::info('New image path: ' . $path);
+
+        // Update the post with the new image path
+        $post->image = $path;
+        $post->save();
+    }
+
+    // Update other fields
+    $post->title = $data['title'] ?? $post->title;
+    $post->updated_at =  now();
+    $post->content = $data['content'] ?? $post->content;
+    $post->save();
+
+    return redirect('dashboard')->with('success', 'Post updated successfully');
+}
 
     public function delete($id)
     {
