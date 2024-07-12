@@ -132,7 +132,7 @@ class FaqController extends Controller
                 'updated_at' => now(),
 
             ]);
-            return redirect()->route('faq.show', $faq->id)->with('success', 'FAQ updated successfully');
+            return redirect()->route('faq', $faq->id)->with('success', 'FAQ updated successfully');
         } else {
             return redirect()->route('faq.show', $faq->id)->with('error', 'FAQ not updated');
         }
